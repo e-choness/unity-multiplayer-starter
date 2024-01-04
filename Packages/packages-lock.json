@@ -105,7 +105,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.7.4",
+      "version": "1.7.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
