@@ -35,6 +35,11 @@ namespace ServiceLocator.Scripts
         }
 
         private static List<GameObject> _tempSceneGameObject;
+
+        public static ServiceLocator For(MonoBehaviour monoBehaviour)
+        {
+            return monoBehaviour.GetComponentInParent<ServiceLocator>().OrNull() ?? ForSceneOf(monoBehaviour) ?? Global;
+        }
         
         public static ServiceLocator ForSceneOf(MonoBehaviour monoBehaviour)
         {
