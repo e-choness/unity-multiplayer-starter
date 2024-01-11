@@ -24,6 +24,7 @@ Command Lines with Log output
 ```bash
 <Path to Project>\<Game>.exe -logfile log-client.txt -mode client
 ```
+
 Unfortunately for now, the logs do not record anything from `Debug.Log()`.
 
 ## Credits
