@@ -9,6 +9,22 @@ A code along project to get familiar with Unity multiplayer game setups.
 - Get Unity Netcode started guide link: [Here](https://docs-multiplayer.unity3d.com/netcode/current/tutorials/get-started-ngo/).
 - Useful command line helpers and use cases link: [Here](https://docs-multiplayer.unity3d.com/netcode/current/tutorials/command-line-helper/).
 - For Unity 2023.1.x or later, [Multiplayer Play Mode](https://docs-multiplayer.unity3d.com/tools/1.1.0/mppm/) is a better option for testing out server, host and client.
+- `NetworkObject` carrier should not be in the scene. Network prefabs handles all `NetworkObject` instances.
+
+Command Lines with Log output
+
+- Log Server
+
+```bash
+<Path to Project>\<Game>.exe -logfile log-server.txt -mode server
+```
+
+- Log Client
+
+```bash
+<Path to Project>\<Game>.exe -logfile log-client.txt -mode client
+```
+Unfortunately for now, the logs do not record anything from `Debug.Log()`.
 
 ## Credits
 
