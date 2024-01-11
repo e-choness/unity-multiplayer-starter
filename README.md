@@ -25,7 +25,17 @@ Command Lines with Log output
 <Path to Project>\<Game>.exe -logfile log-client.txt -mode client
 ```
 
-Unfortunately for now, the logs do not record anything from `Debug.Log()`.
+Unfortunately for now, the logs do not record anything from `Debug.Log()`. A `DebugHelper` outputs anything in a log file on the screen.
+
+## How To Use
+
+1. Add `HelloWorldScene` to `File->Build Settings`.
+2. Go to the built executable location. Run console commands for both server and client from `cmd` or Powershell.
+3. If server is started first, it has nothing in the scene. Once a client starts, a player object will spawn in both games.
+
+## Network Behaviour Notes
+
+- Any `MonoBehaviour` implementing a `NetworkBehaviour` component can override the Netcode method `OnNetworkSpawn()`. The `OnNetworkSpawn()` method fires in response to the `NetworkObject` spawning.
 
 ## Credits
 
