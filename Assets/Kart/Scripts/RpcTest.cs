@@ -7,27 +7,27 @@ namespace kart.Kart.Scripts
     {
         public override void OnNetworkSpawn()
         {
-            if (!IsServer && IsOwner)
+            if (!IsServer && IsOwner) //Only send an RPC to the server on the client that owns the NetworkObject that owns this NetworkBehaviour instance
             {
                 TestServerRpc(0, NetworkObjectId);
             }
         }
 
         [ClientRpc]
-        private void TestClientRpc(int value, ulong sourceNetworkObjId)
+        private void TestClientRpc(int value, ulong sourceNetworkObjectId)
         {
-            Debug.Log($"Client Recevied the RPC #{value} on Network Object #{sourceNetworkObjId}");
-            if (IsOwner)
+            Debug.Log($"Client Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
+            if (IsOwner) //Only send an RPC to the server on the client that owns the NetworkObject that owns this NetworkBehaviour instance
             {
-                TestServerRpc(value+1, sourceNetworkObjId);
+                TestServerRpc(value + 1, sourceNetworkObjectId);
             }
         }
 
         [ServerRpc]
-        private void TestServerRpc(int value, ulong sourceNetworkOjbId)
+        private void TestServerRpc(int value, ulong sourceNetworkObjectId)
         {
-            Debug.Log($"Server Received the RPC #{value} on the Network Object #{sourceNetworkOjbId}");
-            TestClientRpc(value, sourceNetworkOjbId);
+            Debug.Log($"Server Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
+            TestClientRpc(value, sourceNetworkObjectId);
         }
     }
 }
