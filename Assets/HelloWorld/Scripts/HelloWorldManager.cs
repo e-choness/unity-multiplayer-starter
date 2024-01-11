@@ -17,11 +17,15 @@ namespace kart.HelloWorld.Scripts
                 StatusLabels();
                 SubmitNewPosition();
             }
+            
+            GUILayout.EndArea();
         }
 
-        private static void SubmitNewPosition()
+        private static void StartButtons()
         {
-            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Move" : "Request Position Change"));
+            if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
+            if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
+            if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
         }
 
         private static void StatusLabels()
@@ -34,11 +38,24 @@ namespace kart.HelloWorld.Scripts
             GUILayout.Label("Mode: " + mode);
         }
 
-        private static void StartButtons()
+        private static void SubmitNewPosition()
         {
-            if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-            if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
-            if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+            if (GUILayout.Button(NetworkManager.Singleton.IsServer ? "Move" : "Request Position Change"))
+            {
+                if (NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
+                {
+                    foreach (var uid in NetworkManager.Singleton.ConnectedClientsIds)
+                    {
+                        NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid).GetComponent<HelloWorldPlayer>().Move();
+                    }
+                }
+                else
+                {
+                    var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+                    var player = playerObject.GetComponent<HelloWorldPlayer>();
+                    player.Move();
+                }
+            }
         }
     }
 }
