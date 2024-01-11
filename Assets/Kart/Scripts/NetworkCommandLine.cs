@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting.FullSerializer.Internal.Converters;
 using UnityEngine;
 
 namespace kart
@@ -52,7 +51,7 @@ namespace kart
                     var value = i < args.Length - 1 ? args[i + 1].ToLower(): null;
                     value = value?.StartsWith("-") ?? false ? null : value;
                     
-                    argDictionary.Add(arg, value);
+                    argDictionary.TryAdd(arg, value);
                 }
             }
 
