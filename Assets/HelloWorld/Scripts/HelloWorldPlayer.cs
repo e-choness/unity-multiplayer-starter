@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace kart
+namespace kart.HelloWorld.Scripts
 {
     public class HelloWorldPlayer : MonoBehaviour
     {

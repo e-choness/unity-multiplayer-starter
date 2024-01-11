@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-namespace kart.Kart.Scripts
+namespace kart.Kart.Scripts.Input
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Kart/InputReader")]
     public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions

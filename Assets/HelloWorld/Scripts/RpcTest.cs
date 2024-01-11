@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace kart.Kart.Scripts
+namespace kart.HelloWorld.Scripts
 {
     public class RpcTest : NetworkBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace kart
+namespace kart.Kart.Scripts.Network
 {
     public class NetworkCommandLine : MonoBehaviour
     {
