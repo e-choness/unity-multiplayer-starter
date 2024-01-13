@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace kart.Kart.Scripts
+namespace kart.Kart.Scripts.Input
 {
     [Serializable]
     public class AxleInfo

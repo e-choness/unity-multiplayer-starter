@@ -1,7 +1,6 @@
 using Unity.Netcode;
-using UnityEngine;
 
-namespace kart.Kart.Scripts
+namespace kart.Kart.Scripts.Input
 {
     public class PlayerControl : NetworkBehaviour
     {

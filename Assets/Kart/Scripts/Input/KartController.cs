@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace kart.Kart.Scripts
+namespace kart.Kart.Scripts.Input
 {
     public class KartController : MonoBehaviour
     {
