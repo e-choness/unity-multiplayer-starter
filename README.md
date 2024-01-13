@@ -27,7 +27,7 @@ A code along project to get familiar with Unity multiplayer game setups.
   <Path to Project>\<Game>.exe -logfile log-client.txt -mode client
   ```
 
-Unfortunately for now, the logs do not record anything from `Debug.Log()`. A `DebugHelper` outputs anything in a log file on the screen.
+The Debugging logs on `NetworkVariableTest` works and outputs server uptime information. A `DebugHelper` outputs debugging logs on the screen as well.
 
 ## How To Use
 
