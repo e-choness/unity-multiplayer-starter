@@ -5,7 +5,7 @@ namespace kart.HelloWorld.Scripts
 {
     public class HelloWorldPlayer : NetworkBehaviour
     {
-        public NetworkVariable<Vector3> Position = new();
+        [SerializeField] NetworkVariable<Vector3> Position = new();
 
         public override void OnNetworkSpawn()
         {
