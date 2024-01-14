@@ -1,12 +1,23 @@
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace kart.HelloWorld.Scripts
 {
+    public struct CustomData : INetworkSerializable
+    {
+        public Vector3 Coordinate;
+        public FixedString128Bytes Message;
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref Coordinate);
+            serializer.SerializeValue(ref Message);
+        }
+    }
     public class HelloWorldPlayer : NetworkBehaviour
     {
-        [SerializeField] NetworkVariable<Vector3> position = new(default,
+        const string Message = "Custom data message";
+        [SerializeField] NetworkVariable<CustomData> position = new(default,
             NetworkVariableReadPermission.Everyone, 
             NetworkVariableWritePermission.Owner);
 
@@ -19,7 +30,7 @@ namespace kart.HelloWorld.Scripts
 
             position.OnValueChanged += (_, _) =>
             {
-                Debug.Log($"{OwnerClientId} - random number: {position.Value}");
+                Debug.Log($"{OwnerClientId} - random number: {position.Value.Coordinate} and it left a message {position.Value.Message}");
             };
         }
         public void Move()
@@ -27,7 +38,7 @@ namespace kart.HelloWorld.Scripts
             if (NetworkManager.Singleton.IsServer)
             {
                 var randomPosition = GetRandomPositionOnPlane();
-                transform.position = randomPosition;
+                transform.position = randomPosition.Coordinate;
                 position.Value = randomPosition;
             }
             else
@@ -42,14 +53,18 @@ namespace kart.HelloWorld.Scripts
             position.Value = GetRandomPositionOnPlane();
         }
         
-        private Vector3 GetRandomPositionOnPlane()
+        private CustomData GetRandomPositionOnPlane()
         {
-            return new Vector3(Random.Range(-3f, 3f), 1f,Random.Range(-3f, 3f));
+            return new CustomData()
+            {
+                Coordinate = new Vector3(Random.Range(-3f, 3f), 1f, Random.Range(-3f, 3f)),
+                Message = Message
+            };
         }
 
         private void Update()
         {
-            transform.position = position.Value;
+            transform.position = position.Value.Coordinate;
         }
     }
 }
