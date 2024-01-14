@@ -39,9 +39,8 @@ The Debugging logs on `NetworkVariableTest` works and outputs server uptime info
 
 - `NetworkObject` carrier should not be in the scene. Network prefabs handles all `NetworkObject` instances.
 - Any `MonoBehaviour` implementing a `NetworkBehaviour` component can override the Netcode method `OnNetworkSpawn()`. The `OnNetworkSpawn()` method fires in response to the `NetworkObject` spawning.
-
 - Having authority capability mapped with `IsServer` or `IsClient` flag will help sync with the rest of the code about which side has authority.
-  
+
 ```csharp
 bool HasAuthority => isServer; // can be set for your whole class or even project
 // ...
@@ -54,6 +53,20 @@ if (!HasAuthority)
     {
         // ...
     }
+```
+
+- `NetworkVariable` take Generics and serialize them intelligently. If using a constum data structure as `NetworkVariable` type, it should implement `INetworkSerializable` and its `NetworkSerialize` method.
+
+```csharp
+public struct CustomData : INetworkSerializable{
+    public int Id;
+    public bool IsOwner;
+    
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T: IReaderWriter{
+        serializer.SerializeValue(ref Id);
+        serializer.SerializeValue(ref IsOwner);
+    }
+}
 ```
 
 ## Credits
