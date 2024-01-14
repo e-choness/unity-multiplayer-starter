@@ -1,11 +1,14 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace kart.HelloWorld.Scripts
 {
     public class HelloWorldPlayer : NetworkBehaviour
     {
-        [SerializeField] NetworkVariable<Vector3> Position = new();
+        [SerializeField] NetworkVariable<Vector3> position = new(default,
+            NetworkVariableReadPermission.Everyone, 
+            NetworkVariableWritePermission.Owner);
 
         public override void OnNetworkSpawn()
         {
@@ -13,6 +16,11 @@ namespace kart.HelloWorld.Scripts
             {
                 Move();
             }
+
+            position.OnValueChanged += (_, _) =>
+            {
+                Debug.Log($"{OwnerClientId} - random number: {position.Value}");
+            };
         }
         public void Move()
         {
@@ -20,7 +28,7 @@ namespace kart.HelloWorld.Scripts
             {
                 var randomPosition = GetRandomPositionOnPlane();
                 transform.position = randomPosition;
-                Position.Value = randomPosition;
+                position.Value = randomPosition;
             }
             else
             {
@@ -31,7 +39,7 @@ namespace kart.HelloWorld.Scripts
         [ServerRpc]
         private void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
         {
-            Position.Value = GetRandomPositionOnPlane();
+            position.Value = GetRandomPositionOnPlane();
         }
         
         private Vector3 GetRandomPositionOnPlane()
@@ -41,7 +49,7 @@ namespace kart.HelloWorld.Scripts
 
         private void Update()
         {
-            transform.position = Position.Value;
+            transform.position = position.Value;
         }
     }
 }
