@@ -34,14 +34,16 @@ The Debugging logs on `NetworkVariableTest` works and outputs server uptime info
 1. Add `HelloWorldScene` to `File->Build Settings`.
 2. Go to the built executable location. Run console commands for both server and client from `cmd` or Powershell.
 3. If server is started first, it has nothing in the scene. Once a client starts, a player object will spawn in both games.
+4. Install `Multiplayer Tools` from Unity Package Manager Registry. Not mandatory, but very helpful for debugging and monitoring network traffic.
+   - Profiler can be accessed from `Window`->`Analysis`->`Profiler`, and scrolldown to `NGO Messages` and `NGO Objects` sections.
+   - Create an empty object in the scene and attach `RuntimeNetstatsMonitor` component for runtime data monitoring.
 
 ## Network Behaviour Notes
 
 - `NetworkObject` carrier should not be in the scene. Network prefabs handles all `NetworkObject` instances.
 - Any `MonoBehaviour` implementing a `NetworkBehaviour` component can override the Netcode method `OnNetworkSpawn()`. The `OnNetworkSpawn()` method fires in response to the `NetworkObject` spawning.
-
 - Having authority capability mapped with `IsServer` or `IsClient` flag will help sync with the rest of the code about which side has authority.
-  
+
 ```csharp
 bool HasAuthority => isServer; // can be set for your whole class or even project
 // ...
@@ -55,6 +57,23 @@ if (!HasAuthority)
         // ...
     }
 ```
+
+- `NetworkVariable` take Generics and serialize them intelligently. If using a constum data structure as `NetworkVariable` type, it should implement `INetworkSerializable` and its `NetworkSerialize` method.
+
+```csharp
+public struct CustomData : INetworkSerializable{
+    public int Id;
+    public bool IsOwner;
+    
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T: IReaderWriter{
+        serializer.SerializeValue(ref Id);
+        serializer.SerializeValue(ref IsOwner);
+    }
+}
+```
+
+- `[ServerRpc]` attribute marks events being sent to the server. The method is forced to have `ServerRpc` suffix, otherwise it won't compile.
+- `[ClientRpc]` attribute marks events executed by the server and being sent to the client. he method is forced to have `ClientRpc` suffix, otherwise it won't compile.
 
 ## Credits
 

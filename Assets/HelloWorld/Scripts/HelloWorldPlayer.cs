@@ -5,7 +5,10 @@ namespace kart.HelloWorld.Scripts
 {
     public class HelloWorldPlayer : NetworkBehaviour
     {
-        [SerializeField] NetworkVariable<Vector3> Position = new();
+        const string Message = "Custom data message";
+        [SerializeField] NetworkVariable<CustomData> position = new(default,
+            NetworkVariableReadPermission.Everyone, 
+            NetworkVariableWritePermission.Owner);
 
         public override void OnNetworkSpawn()
         {
@@ -13,14 +16,20 @@ namespace kart.HelloWorld.Scripts
             {
                 Move();
             }
+
+            position.OnValueChanged += (_, _) =>
+            {
+                Debug.Log($"{OwnerClientId} - random number: {position.Value.Coordinate} " +
+                          $"and it left a message {position.Value.Message}");
+            };
         }
         public void Move()
         {
             if (NetworkManager.Singleton.IsServer)
             {
                 var randomPosition = GetRandomPositionOnPlane();
-                transform.position = randomPosition;
-                Position.Value = randomPosition;
+                transform.position = randomPosition.Coordinate;
+                position.Value = randomPosition;
             }
             else
             {
@@ -31,17 +40,21 @@ namespace kart.HelloWorld.Scripts
         [ServerRpc]
         private void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
         {
-            Position.Value = GetRandomPositionOnPlane();
+            position.Value = GetRandomPositionOnPlane();
         }
         
-        private Vector3 GetRandomPositionOnPlane()
+        private CustomData GetRandomPositionOnPlane()
         {
-            return new Vector3(Random.Range(-3f, 3f), 1f,Random.Range(-3f, 3f));
+            return new CustomData()
+            {
+                Coordinate = new Vector3(Random.Range(-3f, 3f), 1f, Random.Range(-3f, 3f)),
+                Message = Message
+            };
         }
 
         private void Update()
         {
-            transform.position = Position.Value;
+            transform.position = position.Value.Coordinate;
         }
     }
 }

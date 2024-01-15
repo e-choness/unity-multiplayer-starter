@@ -5,6 +5,9 @@ namespace kart.HelloWorld.Scripts
 {
     public class HelloWorldManager : MonoBehaviour
     {
+        private const string StringHost = "Host";
+        private const string StringClient = "Client";
+        private const string StringServer = "Server";
         private void OnGUI()
         {
             GUILayout.BeginArea(new Rect(10, 10, 300, 300));
@@ -23,15 +26,15 @@ namespace kart.HelloWorld.Scripts
 
         private static void StartButtons()
         {
-            if (GUILayout.Button("Host")) NetworkManager.Singleton.StartHost();
-            if (GUILayout.Button("Client")) NetworkManager.Singleton.StartClient();
-            if (GUILayout.Button("Server")) NetworkManager.Singleton.StartServer();
+            if (GUILayout.Button(StringHost)) NetworkManager.Singleton.StartHost();
+            if (GUILayout.Button(StringClient)) NetworkManager.Singleton.StartClient();
+            if (GUILayout.Button(StringServer)) NetworkManager.Singleton.StartServer();
         }
 
         private static void StatusLabels()
         {
-            var mode = NetworkManager.Singleton.IsHost ? "Host" :
-                NetworkManager.Singleton.IsServer ? "Server" : "Client";
+            var mode = NetworkManager.Singleton.IsHost ? StringHost :
+                NetworkManager.Singleton.IsServer ? StringServer : StringClient;
             
             GUILayout.Label("Transport: " + NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
             
