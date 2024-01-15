@@ -1,19 +1,8 @@
-using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace kart.HelloWorld.Scripts
 {
-    public struct CustomData : INetworkSerializable
-    {
-        public Vector3 Coordinate;
-        public FixedString128Bytes Message;
-        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        {
-            serializer.SerializeValue(ref Coordinate);
-            serializer.SerializeValue(ref Message);
-        }
-    }
     public class HelloWorldPlayer : NetworkBehaviour
     {
         const string Message = "Custom data message";
@@ -30,7 +19,8 @@ namespace kart.HelloWorld.Scripts
 
             position.OnValueChanged += (_, _) =>
             {
-                Debug.Log($"{OwnerClientId} - random number: {position.Value.Coordinate} and it left a message {position.Value.Message}");
+                Debug.Log($"{OwnerClientId} - random number: {position.Value.Coordinate} " +
+                          $"and it left a message {position.Value.Message}");
             };
         }
         public void Move()
