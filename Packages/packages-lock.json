@@ -316,7 +316,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "141b4e1e31966242a6fb7c495b52ac3d1221bc75"
+      "hash": "d1ef610e9fe3ad0b490cce91594449fc0af809a6"
     },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.14.0",
