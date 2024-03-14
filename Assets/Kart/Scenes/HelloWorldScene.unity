@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224130951485110974, guid: 9ed2a051c32b4fe47a5e4fb95c20b03f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000045776367
+      value: 0.000091552734
       objectReference: {fileID: 0}
     - target: {fileID: 224166536479716514, guid: 9ed2a051c32b4fe47a5e4fb95c20b03f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2219,10 +2219,6 @@ SceneRoots:
   - {fileID: 444120278}
   - {fileID: 1673042219}
   - {fileID: 1184348041}
-  - {fileID: 179818414}
-  - {fileID: 279884188}
-  - {fileID: 799697779}
-  - {fileID: 513107705}
   - {fileID: 298361316}
   - {fileID: 1562717482}
   - {fileID: 963194228}
@@ -2231,3 +2227,7 @@ SceneRoots:
   - {fileID: 1334907676}
   - {fileID: 705507995}
   - {fileID: 1308666400}
+  - {fileID: 179818414}
+  - {fileID: 279884188}
+  - {fileID: 799697779}
+  - {fileID: 513107705}
