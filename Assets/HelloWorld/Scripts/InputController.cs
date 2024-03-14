@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace kart
 {
+    [DisallowMultipleComponent]
     public class InputController : MonoBehaviour
     {
         // Inputs

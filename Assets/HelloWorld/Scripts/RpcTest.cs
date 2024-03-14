@@ -13,7 +13,7 @@ namespace kart.HelloWorld.Scripts
             }
         }
 
-        [ClientRpc]
+        [Rpc(SendTo.ClientsAndHost)]
         private void TestClientRpc(int value, ulong sourceNetworkObjectId)
         {
             Debug.Log($"Client Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");
@@ -23,7 +23,7 @@ namespace kart.HelloWorld.Scripts
             }
         }
 
-        [ServerRpc]
+        [Rpc(SendTo.Server)]
         private void TestServerRpc(int value, ulong sourceNetworkObjectId)
         {
             Debug.Log($"Server Received the RPC #{value} on NetworkObject #{sourceNetworkObjectId}");

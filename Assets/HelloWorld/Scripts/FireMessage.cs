@@ -9,18 +9,20 @@ namespace kart.HelloWorld.Scripts
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
-            if (serializer.IsReader)
-            {
-                var reader = serializer.GetFastBufferReader();
-                reader.ReadValueSafe(out RandomNum);
-                reader.ReadValueSafe(out Message);
-            }
-            else
-            {
-                var writer = serializer.GetFastBufferWriter();
-                writer.WriteValueSafe(RandomNum);
-                writer.WriteValueSafe(Message);
-            }
+            serializer.SerializeValue(ref RandomNum);
+            serializer.SerializeValue(ref Message);
+            // if (serializer.IsReader)
+            // {
+            //     var reader = serializer.GetFastBufferReader();
+            //     reader.ReadValueSafe(out RandomNum);
+            //     reader.ReadValueSafe(out Message);
+            // }
+            // else
+            // {
+            //     var writer = serializer.GetFastBufferWriter();
+            //     writer.WriteValueSafe(RandomNum);
+            //     writer.WriteValueSafe(Message);
+            // }
         }
 
         public bool Equals(FireMessage other)

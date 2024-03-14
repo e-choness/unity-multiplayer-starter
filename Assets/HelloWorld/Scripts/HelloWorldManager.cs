@@ -8,6 +8,14 @@ namespace kart.HelloWorld.Scripts
         private const string StringHost = "Host";
         private const string StringClient = "Client";
         private const string StringServer = "Server";
+
+        public static string Mode => GetMode();
+
+        public static string GetMode()
+        {
+            return NetworkManager.Singleton.IsHost ? StringHost :
+                NetworkManager.Singleton.IsServer ? StringServer : StringClient;
+        }
         private void OnGUI()
         {
             GUILayout.BeginArea(new Rect(10, 10, 300, 300));
@@ -29,16 +37,14 @@ namespace kart.HelloWorld.Scripts
             if (GUILayout.Button(StringHost)) NetworkManager.Singleton.StartHost();
             if (GUILayout.Button(StringClient)) NetworkManager.Singleton.StartClient();
             if (GUILayout.Button(StringServer)) NetworkManager.Singleton.StartServer();
+            
         }
 
         private static void StatusLabels()
         {
-            var mode = NetworkManager.Singleton.IsHost ? StringHost :
-                NetworkManager.Singleton.IsServer ? StringServer : StringClient;
-            
             GUILayout.Label("Transport: " + NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
             
-            GUILayout.Label("Mode: " + mode);
+            GUILayout.Label("Mode: " + Mode);
         }
 
         private static void SubmitNewPosition()

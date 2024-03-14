@@ -1,5 +1,6 @@
 ﻿using kart.Utilities.Extensions;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace kart.HelloWorld.Scripts
@@ -16,12 +17,19 @@ namespace kart.HelloWorld.Scripts
         private Rigidbody _rigidbody;
         
         // Network components
-        private NetworkVariable<FireMessage> _message = new();
+        // private NetworkVariable<FireMessage> _message = new(default,  NetworkVariableReadPermission.Everyone, 
+        //     NetworkVariableWritePermission.Owner);
+        
+        // Const names
+        private const string Host = "Host";
+        private const string Client = "Client";
+        private const string Server = "Server";
 
         public override void OnNetworkSpawn()
         {
             InitPhysics();
             InitControls();
+            SpawnNames();
         }
 
         private void InitPhysics()
@@ -33,7 +41,14 @@ namespace kart.HelloWorld.Scripts
         private void InitControls()
         {
             _inputController = gameObject.GetOrAdd<InputController>();
-            _inputController.Fire += OnFire;
+            _inputController.Fire += OnFireRpc;
+        }
+
+        private void SpawnNames()
+        {
+            var suffix = NetworkManager.Singleton.IsHost ?
+                Host : NetworkManager.Singleton.IsServer ? Server : Client;
+            gameObject.name += suffix;
         }
 
 
@@ -44,18 +59,21 @@ namespace kart.HelloWorld.Scripts
 
         private void Move()
         {
-            if(IsOwner)
-                _rigidbody.velocity = new Vector3(_inputController.Movememt.x, 0.0f, _inputController.Movememt.y) * speed;
+            if (!IsOwner) return;
+            _rigidbody.velocity = new Vector3(_inputController.Movememt.x, 0.0f, _inputController.Movememt.y) * speed;
         }
 
-        private void OnFire()
+        [Rpc(SendTo.ClientsAndHost)]
+        private void OnFireRpc()
         {
-            _message.Value = new()
-            {
-                RandomNum = Random.Range(0, 10),
-                Message = $"Hello Player - OnFire() {_message.Value.RandomNum}"
-            };
-            Debug.Log(_message.Value.Message);
+            // if (!IsOwner) return;
+            // _message.Value = new()
+            // {
+            //     RandomNum = Random.Range(0, 10),
+            //     Message = $"Hello Player - OnFire() {_message.Value.RandomNum}"
+            // };
+            // Debug.Log(_message.Value.Message);
+            Debug.Log($"Fire {NetworkObjectId.ToString()}");
         }
     }
 }
