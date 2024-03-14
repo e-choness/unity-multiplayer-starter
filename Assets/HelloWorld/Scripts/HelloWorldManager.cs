@@ -18,7 +18,7 @@ namespace kart.HelloWorld.Scripts
             else
             {
                 StatusLabels();
-                SubmitNewPosition();
+                // SubmitNewPosition();
             }
             
             GUILayout.EndArea();
