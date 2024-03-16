@@ -8,35 +8,21 @@ namespace kart.Kart.Scripts.Controls
         [Header("Axle Information")]
         [SerializeField] private AxleInfo[] axleInfo;
         
-        [Header("Physics")] 
-        [SerializeField] private Transform centerOfMass;
-        
         [Header("References")] 
         [SerializeField] private InputReader playerInput;
 
         // Input
         private IDrive _input;
         
-        // Physics
-        private Rigidbody _rigidbody;
-        private Vector3 _originalCenterMass;
 
         #region Initialization
         
         private void Awake()
         {
             InitInput();
-            InitPhysics();
             InitAxleInfo();
         }
-
-        private void InitPhysics()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.centerOfMass = centerOfMass.localPosition;
-            _originalCenterMass = centerOfMass.localPosition;
-        }
-
+        
         private void InitInput()
         {
             if (playerInput is IDrive driveInput)
@@ -77,7 +63,7 @@ namespace kart.Kart.Scripts.Controls
                 _ => value
             };
         }
-        public bool GetBreakInput() => _input.IsBreaking;
+        public bool IsBreaking() => _input.IsBreaking;
 
         #endregion
     }

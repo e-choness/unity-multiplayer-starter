@@ -2,6 +2,7 @@
 
 namespace kart.Kart.Scripts.Controls
 {
+    [DisallowMultipleComponent]
     public class SteerController : MonoBehaviour
     {
         [Header("Steering Attributes")] 

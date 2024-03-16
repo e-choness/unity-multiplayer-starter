@@ -3,6 +3,7 @@ using Utilities;
 
 namespace kart.Kart.Scripts.Controls
 {
+    [DisallowMultipleComponent]
     public class BrakeController : MonoBehaviour
     {
         [SerializeField] private float brakeTorgue = 100.0f;
@@ -32,7 +33,7 @@ namespace kart.Kart.Scripts.Controls
             {
                 if (!axle.motor) return;
 
-                var isBreaking = _kartController.GetBreakInput();
+                var isBreaking = _kartController.IsBreaking();
                 if (isBreaking)
                 {
                     _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX;

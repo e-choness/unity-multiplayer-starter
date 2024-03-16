@@ -2,12 +2,12 @@
 
 namespace kart.Kart.Scripts.Controls
 {
+    [DisallowMultipleComponent]
     public class MotorController : MonoBehaviour
     {
         [Header("Motor Attributes")] 
         [SerializeField] private float maxMotorTorgue = 3000.0f;
         
-
         // Axle Info from Kart Controller
         private KartController _kartController;
         private AxleInfo[] _axleInfo;

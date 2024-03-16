@@ -88,7 +88,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: RearRightWheelCollider
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3296369476629970951, guid: b7c35033a4ec8754c96c96d769e5252d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -110,6 +111,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3618581311469605271, guid: b7c35033a4ec8754c96c96d769e5252d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8768538342342292438}
+    - targetCorrespondingSourceObject: {fileID: 3618581311469605271, guid: b7c35033a4ec8754c96c96d769e5252d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10482444564615936}
     - targetCorrespondingSourceObject: {fileID: 3618581311469605271, guid: b7c35033a4ec8754c96c96d769e5252d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2525864043681074548}
@@ -140,7 +144,6 @@ MonoBehaviour:
     rightWheel: {fileID: 5286759756994771450}
     motor: 0
     steering: 0
-  centerOfMass: {fileID: 8603984167628140839}
   playerInput: {fileID: 11400000, guid: c1df1815bb848164dab289706511cf3f, type: 2}
 --- !u!114 &6590622392981001962
 MonoBehaviour:
@@ -208,6 +211,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxBankAngle: 5
   bankSpeed: 2
+--- !u!114 &10482444564615936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866220847921262033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef77c14f3d90434f9a5af86fa43b0461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 100
+  turnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  turnStrength: 1500
+  downForce: 100
+  lateralGravityScale: 10
+  centerOfMass: {fileID: 8603984167628140839}
 --- !u!114 &2525864043681074548
 MonoBehaviour:
   m_ObjectHideFlags: 0
