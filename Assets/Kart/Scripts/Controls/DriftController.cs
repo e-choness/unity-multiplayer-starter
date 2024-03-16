@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace kart.Kart.Scripts.Controls
 {
+    [DisallowMultipleComponent]
     public class DriftController : MonoBehaviour
     {
         [Header("State")] 
@@ -28,7 +29,7 @@ namespace kart.Kart.Scripts.Controls
 
         private void HandleDrifts()
         {
-            var isBreaking = _kartController.GetBreakInput();
+            var isBreaking = _kartController.IsBreaking();
             foreach (var axle in _axleInfo)
             {
                 if (!axle.motor) return;
@@ -59,7 +60,7 @@ namespace kart.Kart.Scripts.Controls
 
         private WheelFrictionCurve UpdateFriction(WheelFrictionCurve friction)
         {
-            friction.stiffness = _kartController.GetBreakInput()
+            friction.stiffness = _kartController.IsBreaking()
                 ? Mathf.SmoothDamp(friction.stiffness, 0.5f, ref _driftVelocity, Time.deltaTime * 2.0f)
                 : 1.0f;
             return friction;
@@ -74,5 +75,11 @@ namespace kart.Kart.Scripts.Controls
             wheel.forwardFriction = axle.originalForwardFriction;
             wheel.sidewaysFriction = axle.originalSidewayFriction;
         }
+
+        #region HelperMethods
+
+        public bool IsGrounded() => isGrounded;
+
+        #endregion
     }
 }
