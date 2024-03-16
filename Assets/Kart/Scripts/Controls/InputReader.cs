@@ -5,7 +5,7 @@ using static PlayerInputActions;
 namespace kart.Kart.Scripts.Controls
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Kart/Input Reader")]
-    public class InputReader : ScriptableObject, IPlayerActions
+    public class InputReader : ScriptableObject, IPlayerActions, IDrive
     {
         public Vector2 Move => _inputActions.Player.Move.ReadValue<Vector2>();
         public bool IsBreaking => _inputActions.Player.Brake.ReadValue<float>() > 0;
