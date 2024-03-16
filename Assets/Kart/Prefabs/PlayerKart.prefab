@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12993279, y: -0.000000029549687, z: 0.0000000038722994, w: 0.99152285}
+  m_LocalRotation: {x: 0.12993279, y: 0.000000017060518, z: -0.000000002235673, w: 0.99152285}
   m_LocalPosition: {x: 0, y: 8, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -292,7 +292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12993279, y: -0.000000029549687, z: 0.0000000038722994, w: 0.99152285}
+  m_LocalRotation: {x: 0.12993279, y: 0.000000017060518, z: -0.000000002235673, w: 0.99152285}
   m_LocalPosition: {x: 0, y: 8, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1382,6 +1382,50 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3213959070053032519, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: m_Name
+      value: FrontRightWheelCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: playerInput
+      value: 
+      objectReference: {fileID: 11400000, guid: c1df1815bb848164dab289706511cf3f, type: 2}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: centerOfMass
+      value: 
+      objectReference: {fileID: 7199492006755286778}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: axleInfo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: axleInfo.Array.data[0].leftWheel
+      value: 
+      objectReference: {fileID: 4845099184713124134}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: axleInfo.Array.data[1].leftWheel
+      value: 
+      objectReference: {fileID: 569064266460550538}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: axleInfo.Array.data[0].rightWheel
+      value: 
+      objectReference: {fileID: 6253964541503339571}
+    - target: {fileID: 3874202208338444856, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: axleInfo.Array.data[1].rightWheel
+      value: 
+      objectReference: {fileID: 6760063755237078567}
+    - target: {fileID: 4978949114571937404, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: m_Name
+      value: RearRightWheelCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982708361485080707, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: m_Name
+      value: RearLeftWheelCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934035721675153042, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+      propertyPath: m_Name
+      value: FrontLeftWheelCollider
+      objectReference: {fileID: 0}
     - target: {fileID: 8623503644229886556, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
       propertyPath: circuit
       value: 
@@ -1470,8 +1514,33 @@ PrefabInstance:
       addedObject: {fileID: 766}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+--- !u!146 &569064266460550538 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 1399349793630263895, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+  m_PrefabInstance: {fileID: 1481338851797946333}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &654959301829717812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2132498221933732073, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+  m_PrefabInstance: {fileID: 1481338851797946333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &4845099184713124134 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 6319541898901620475, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+  m_PrefabInstance: {fileID: 1481338851797946333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &6253964541503339571 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 4775027592226354158, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+  m_PrefabInstance: {fileID: 1481338851797946333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!146 &6760063755237078567 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 5286759756994771450, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
+  m_PrefabInstance: {fileID: 1481338851797946333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7199492006755286778 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8603984167628140839, guid: abc26b02148e4a147a8818642c2541fb, type: 3}
   m_PrefabInstance: {fileID: 1481338851797946333}
   m_PrefabAsset: {fileID: 0}
