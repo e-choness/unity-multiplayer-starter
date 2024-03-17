@@ -1,10 +1,7 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using UnityEngine;
-
-#if UNITY_EDITOR
+using static UnityEditor.Build.NamedBuildTarget;
 
 using UnityEditor;
 
@@ -15,7 +12,8 @@ public class TemplateEditorDetection : Editor {
     static TemplateEditorDetection() {
 
         //Get the current definition symbols
-        string currentDefineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
+        string currentDefineSymbols = PlayerSettings.GetScriptingDefineSymbols(
+            FromBuildTargetGroup(EditorUserBuildSettings.selectedBuildTargetGroup));
         List<string> allDefineSymbols = currentDefineSymbols.Split(';').ToList();
 
         //Template core namespace classes used for detection
@@ -34,8 +32,8 @@ public class TemplateEditorDetection : Editor {
         if (ballgame != null && !allDefineSymbols.Contains(ballgameDefine)) { allDefineSymbols.Add(ballgameDefine); }
 
         //apply the definition symbols
-        PlayerSettings.SetScriptingDefineSymbolsForGroup(
-            EditorUserBuildSettings.selectedBuildTargetGroup,
+        PlayerSettings.SetScriptingDefineSymbols(
+            FromBuildTargetGroup(EditorUserBuildSettings.selectedBuildTargetGroup),
             string.Join(";", allDefineSymbols.ToArray()));
 
     }

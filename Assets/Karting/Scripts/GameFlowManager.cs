@@ -52,7 +52,7 @@ public class GameFlowManager : MonoBehaviour
     {
         if (autoFindKarts)
         {
-            karts = FindObjectsOfType<ArcadeKart>();
+            karts = FindObjectsByType<ArcadeKart>(FindObjectsSortMode.None);
             if (karts.Length > 0)
             {
                 if (!playerKart) playerKart = karts[0];
@@ -60,10 +60,10 @@ public class GameFlowManager : MonoBehaviour
             DebugUtility.HandleErrorIfNullFindObject<ArcadeKart, GameFlowManager>(playerKart, this);
         }
 
-        m_ObjectiveManager = FindObjectOfType<ObjectiveManager>();
+        m_ObjectiveManager = FindAnyObjectByType<ObjectiveManager>();
 		DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
 
-        m_TimeManager = FindObjectOfType<TimeManager>();
+        m_TimeManager = FindAnyObjectByType<TimeManager>();
         DebugUtility.HandleErrorIfNullFindObject<TimeManager, GameFlowManager>(m_TimeManager, this);
 
         AudioUtility.SetMasterVolume(1);

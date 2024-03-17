@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Linq;
 using Unity.Play.Publisher.Editor;
 using UnityEngine;
@@ -67,3 +68,4 @@ namespace Unity.Tutorials
         }
     }
 }
+#endif

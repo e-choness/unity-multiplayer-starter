@@ -80,12 +80,12 @@ public abstract class Objective : MonoBehaviour
         ObjectiveManager.RegisterObjective(this);
 
         // register this objective in the ObjectiveHUDManger
-        m_ObjectiveHUDManger = FindObjectOfType<ObjectiveHUDManger>();
+        m_ObjectiveHUDManger = FindAnyObjectByType<ObjectiveHUDManger>();
         DebugUtility.HandleErrorIfNullFindObject<ObjectiveHUDManger, Objective>(m_ObjectiveHUDManger, this);
         m_ObjectiveHUDManger.RegisterObjective(this);
 
         // register this objective in the NotificationHUDManager
-        m_NotificationHUDManager = FindObjectOfType<NotificationHUDManager>();
+        m_NotificationHUDManager = FindAnyObjectByType<NotificationHUDManager>();
         DebugUtility.HandleErrorIfNullFindObject<NotificationHUDManager, Objective>(m_NotificationHUDManager, this);
         m_NotificationHUDManager.RegisterObjective(this);
     }

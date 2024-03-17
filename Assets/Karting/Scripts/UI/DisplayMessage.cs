@@ -24,7 +24,7 @@ public class DisplayMessage : MonoBehaviour
     {
         m_InitTime = Time.time;
         if (m_DisplayMessageManager == null)
-            m_DisplayMessageManager = FindObjectOfType<DisplayMessageManager>();
+            m_DisplayMessageManager = FindAnyObjectByType<DisplayMessageManager>();
         
         DebugUtility.HandleErrorIfNullFindObject<DisplayMessageManager, DisplayMessage>(m_DisplayMessageManager, this);
 

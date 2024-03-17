@@ -50,13 +50,13 @@ namespace Kart {
             
             await Authenticate();
 
-            heartbeatTimer.OnTimerStop += () => {
-                HandleHeartbeatAsync();
+            heartbeatTimer.OnTimerStop += async () => {
+                await HandleHeartbeatAsync();
                 heartbeatTimer.Start();
             };
             
-            pollForUpdatesTimer.OnTimerStop += () => {
-                HandlePollForUpdatesAsync();
+            pollForUpdatesTimer.OnTimerStop += async () => {
+                await HandlePollForUpdatesAsync();
                 pollForUpdatesTimer.Start();
             };
         }

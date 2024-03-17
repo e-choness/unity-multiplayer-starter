@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using Unity.Tutorials.Core.Editor;
 using UnityEditor;
 
@@ -9,8 +10,8 @@ namespace Unity.Tutorials
     /// </summary>
     public class TutorialCallbacks : ScriptableObject
     {
-        public FutureObjectReference futureJumpInstance = default;
-        public FutureObjectReference futureBotInstance = default;
+        public FutureObjectReference futureJumpInstance;
+        public FutureObjectReference futureBotInstance;
 
         /// <summary>
         /// Keeps the Jump selected during a tutorial. 
@@ -51,7 +52,8 @@ namespace Unity.Tutorials
 
         public void StartTutorial(Tutorial tutorial)
         {
-            TutorialManager.Instance.StartTutorial(tutorial);
+            TutorialWindowUtils.StartTutorial(tutorial);
         }
     }
 }
+#endif
