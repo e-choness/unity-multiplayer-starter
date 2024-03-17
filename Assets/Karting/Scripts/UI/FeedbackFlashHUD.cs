@@ -30,10 +30,10 @@ public class FeedbackFlashHUD : MonoBehaviour
     {
         // Subscribe to player damage events
         
-        m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+        m_GameFlowManager = FindAnyObjectByType<GameFlowManager>();
         DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, FeedbackFlashHUD>(m_GameFlowManager, this);
 
-        m_timeManager = FindObjectOfType<TimeManager>();
+        m_timeManager = FindAnyObjectByType<TimeManager>();
         DebugUtility.HandleErrorIfNullFindObject<TimeManager, FeedbackFlashHUD>(m_timeManager, this);
 
         m_audioSource = GetComponent<AudioSource>();

@@ -24,7 +24,7 @@ public class InGameMenuManager : MonoBehaviour
         //m_PlayerInputsHandler = FindObjectOfType<PlayerInputHandler>();
         //DebugUtility.HandleErrorIfNullFindObject<PlayerInputHandler, InGameMenuManager>(m_PlayerInputsHandler, this);
 
-        m_FramerateCounter = FindObjectOfType<FramerateCounter>();
+        m_FramerateCounter = FindAnyObjectByType<FramerateCounter>();
         //DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(m_FramerateCounter, this);
 
         menuRoot.SetActive(false);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 
 namespace KartGame
@@ -33,15 +34,15 @@ namespace KartGame
     public class WebGLBuildSettings
     {
         public bool developmentBuild;
-        public bool autoconnectProfiler;
+        [FormerlySerializedAs("autoconnectProfiler")] public bool autoConnectProfiler;
         public GraphicsDeviceType[] graphicsDeviceSettings;
         public bool halfResolution;
         
         public GraphicsDeviceType[] SetGraphicsDevices(bool webGL1, bool webGL2)
         {
             return webGL1 && webGL2
-                ? new[] {GraphicsDeviceType.OpenGLES3, GraphicsDeviceType.OpenGLES2}
-                : new[] {webGL1 ? GraphicsDeviceType.OpenGLES2 : GraphicsDeviceType.OpenGLES3};
+                ? new[] {GraphicsDeviceType.OpenGLES3, GraphicsDeviceType.Vulkan}
+                : new[] {webGL1 ? GraphicsDeviceType.Vulkan : GraphicsDeviceType.OpenGLES3};
         }
 
         public string GetName()
@@ -52,18 +53,18 @@ namespace KartGame
                 name += "_" + graphicsDeviceSettings[i].ToString();
             }
 
-            if (autoconnectProfiler) name += "_profiler";
+            if (autoConnectProfiler) name += "_profiler";
             if (halfResolution) name += "_halfRes";
             return name;
         }
         
         public WebGLBuildSettings(bool developmentBuild = false,
-            bool autoconnectProfiler = false, bool halfResolution = false,  GraphicsDeviceType[] graphicsDeviceSettings = null)
+            bool autoConnectProfiler = false, bool halfResolution = false,  GraphicsDeviceType[] graphicsDeviceSettings = null)
         {
             this.graphicsDeviceSettings = graphicsDeviceSettings ?? SetGraphicsDevices(true,true);
             this.developmentBuild = developmentBuild;
             this.halfResolution = halfResolution;
-            this.autoconnectProfiler = autoconnectProfiler;
+            this.autoConnectProfiler = autoConnectProfiler;
         }
     }
 }

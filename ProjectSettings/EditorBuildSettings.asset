@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/HelloWorld/Scene/HelloWorldScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Kart/Scenes/KartScene.unity
     guid: 2e782a9258df1144c9c702085414de5f
   m_configObjects: {}
