@@ -17,9 +17,12 @@ namespace kart.Kart.Scripts.Controls
         [SerializeField] private float downForce = 100.0f;
         [SerializeField] private float lateralGravityScale = 10.0f;
         [SerializeField] private Transform centerOfMass;
+        
+        // Physics attribute
         private const float CenterOfMassOffset = -0.5f;
         private Vector3 _originalCenterOfMass;
-        
+        private float _gravity => Physics.gravity.y; 
+            
         // Ticks and frames attribute
         private const float ServerTick = 60.0f;
         
@@ -66,19 +69,19 @@ namespace kart.Kart.Scripts.Controls
             }
             else
             {
-                HandleAirBornMovement(input);
+                HandleAirBornMovement();
             }
         }
 
         private void HandleGroundedMovement(Vector2 input)
         {
-            TurnMovement(input);
+            Turn(input);
             Accelerate(input);
             ApplyDownForce();
             ShiftCenterOfMass(input.y);
         }
 
-        private void TurnMovement(Vector2 input)
+        private void Turn(Vector2 input)
         {
             if (Mathf.Abs(input.y) > 0.1f || Mathf.Abs(_kartVelocity.z) > 1.0f)
             {
@@ -125,9 +128,14 @@ namespace kart.Kart.Scripts.Controls
             _rigidbody.centerOfMass = _originalCenterOfMass + centerOfMassChanges;
         }
 
-        private void HandleAirBornMovement(Vector2 input)
+        private void HandleAirBornMovement()
         {
-            
+            var velocity = _rigidbody.velocity;
+            _rigidbody.velocity = Vector3.Lerp(
+                velocity,
+                velocity + Vector3.down * _gravity,
+                Time.deltaTime * _gravity
+            );
         }
     }
 }

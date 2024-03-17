@@ -43,18 +43,18 @@ namespace kart.Kart.Scripts.Controls
         }
         #endregion
 
-        #region HelperMethods
+        #region Getters
 
         public AxleInfo[] GetAxleInfo() => axleInfo;
 
         public Vector2 GetMoveInput()
         {
             return new Vector2(
-                NomalizeInput(_input.Move.x),
-                NomalizeInput(_input.Move.y));
+                NormalizeInput(_input.Move.x),
+                NormalizeInput(_input.Move.y));
         }
         
-        private float NomalizeInput(float value)
+        private float NormalizeInput(float value)
         {
             return value switch
             {
