@@ -1,8 +1,9 @@
 using kart.Kart.Scripts.Controls;
 using UnityEngine;
 
-namespace kart
+namespace kart.Kart.Scripts.Visuals
 {
+    [DisallowMultipleComponent]
     public class SkitMarkHandler : MonoBehaviour
     {
         [Header("Slip Attribute")]
@@ -24,28 +25,25 @@ namespace kart
             _driftController = GetComponent<DriftController>();
             _wheelColliders = GetComponentsInChildren<WheelCollider>();
             _skidMarks = new Transform[_wheelColliders.Length];
-            Debug.Log($"Wheel collider number: {_wheelColliders.Length} skid mark number: {_skidMarks.Length}");
         }
 
         private void FixedUpdate()
         {
             for (var i = 0; i != _wheelColliders.Length; i++)
             {
-                UpdateSkitMarks(i);
+                HandleSkitMarks(i);
             }
         }
 
-        private void UpdateSkitMarks(int index)
+        private void HandleSkitMarks(int index)
         {
             WheelHit hit;
             if (!IsHittingGround(index, out hit))
             {
-                Debug.Log("Kart is not hitting the ground.");
                 EndSkitMark(index);
                 return;
             }
 
-            Debug.Log("Kart is hitting the ground.");
             if (IsSlipping(hit))
             {
                 DrawSkitMark(index);
@@ -71,7 +69,6 @@ namespace kart
         {
             if (_skidMarks[index] is not null) return;
 
-            Debug.Log("Kart is drawing the skit mark.");
             _skidMarks[index] = Instantiate(skidMarkPrefab, _wheelColliders[index].transform);
             _skidMarks[index].localPosition = -Vector3.up * (_wheelColliders[index].radius * 0.9f);
             _skidMarks[index].localRotation = Quaternion.Euler(skidMarkAngle, 0.0f, 0.0f);
@@ -81,7 +78,6 @@ namespace kart
         {
             if (_skidMarks[index] is null) return;
 
-            Debug.Log("Kart is ending the skit mark.");
             var holder = _skidMarks[index];
             _skidMarks[index] = null;
             holder.SetParent(null);

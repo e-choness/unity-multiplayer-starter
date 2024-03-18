@@ -1,4 +1,4 @@
-namespace Utilities {
+namespace kart.Kart.Scripts.Utils.Helpers {
     public static class Helpers {
         public static void QuitGame() {
 #if UNITY_EDITOR

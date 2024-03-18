@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Utilities;
+﻿using kart.Kart.Scripts.Utils.Extensions;
+using UnityEngine;
 
 namespace kart.Kart.Scripts.Controls
 {
