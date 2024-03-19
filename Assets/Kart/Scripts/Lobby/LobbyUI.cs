@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Kart {
+namespace kart.Kart.Scripts.Lobby {
     public class LobbyUI : MonoBehaviour {
         [SerializeField] Button createLobbyButton;
         [SerializeField] Button joinLobbyButton;
@@ -14,12 +14,16 @@ namespace Kart {
         }
 
         async void CreateGame() {
-            await Multiplayer.Instance.CreateLobby();
+            Debug.Log("LobbyUI - CreateGame clicked.");
+            await LobbyHandler.Instance.CreateLobby();
+            
+            Debug.Log("LobbyUI - Done Create Lobby.");
             Loader.LoadNetwork(gameScene);
         }
 
         async void JoinGame() {
-            await Multiplayer.Instance.QuickJoinLobby();
+            Debug.Log("LobbyUI - QuickJoinLobby clicked.");
+            await LobbyHandler.Instance.QuickJoinLobby();
         }
     }
 }

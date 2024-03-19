@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 9145248981065139292}
   - component: {fileID: 4660327030365381429}
   - component: {fileID: 714774417698365320}
+  - component: {fileID: 8339786242275558563}
   m_Layer: 5
   m_Name: LobbyUI
   m_TagString: Untagged
@@ -300,6 +301,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8339786242275558563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5805428974141386154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6719f0ac2be64cc9818017354ba43f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  createLobbyButton: {fileID: 6150625775158584583}
+  joinLobbyButton: {fileID: 1072627621030380233}
+  gameScene:
+    asset: {fileID: 102900000, guid: 2e782a9258df1144c9c702085414de5f, type: 3}
+    guid: 2e782a9258df1144c9c702085414de5f
 --- !u!1 &6295133765166929928
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,8 +387,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -626,8 +644,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Create
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
