@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using kart.Kart.Scripts.Controls;
+using UnityEngine;
 
-namespace kart.Kart.Scripts.Controls
+namespace kart.Kart.Scripts.Animation
 {
     [DisallowMultipleComponent]
     public class WheelAnimator : MonoBehaviour

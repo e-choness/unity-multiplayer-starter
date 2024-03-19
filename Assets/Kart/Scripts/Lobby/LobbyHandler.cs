@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using kart.Kart.Scripts.Utils.Singletons;
+using kart.Kart.Scripts.Utils.Timers;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -11,10 +13,9 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using Utilities;
 using Random = UnityEngine.Random;
 
-namespace Kart {
+namespace kart.Kart.Scripts.Lobby {
     [Serializable]
     public enum EncryptionType {
         DTLS, // Datagram Transport Layer Security
@@ -22,42 +23,38 @@ namespace Kart {
     }
     // Note: Also Udp and Ws are possible choices
     
-    public class Multiplayer : MonoBehaviour {
+    public class LobbyHandler : PersistentSingleton<LobbyHandler> {
         [SerializeField] string lobbyName = "Lobby";
         [SerializeField] int maxPlayers = 4;
         [SerializeField] EncryptionType encryption = EncryptionType.DTLS;
         
-        public static Multiplayer Instance { get; private set; }
-        
         public string PlayerId { get; private set;  }
         public string PlayerName { get; private set; }
         
-        Lobby currentLobby;
-        string connectionType => encryption == EncryptionType.DTLS ? k_dtlsEncryption : k_wssEncryption;
-        
-        const float k_lobbyHeartbeatInterval = 20f;
-        const float k_lobbyPollInterval = 65f;
-        const string k_keyJoinCode = "RelayJoinCode";
-        const string k_dtlsEncryption = "dtls"; // Datagram Transport Layer Security
-        const string k_wssEncryption = "wss"; // Web Socket Secure, use for WebGL builds
-        
-        CountdownTimer heartbeatTimer = new CountdownTimer(k_lobbyHeartbeatInterval);
-        CountdownTimer pollForUpdatesTimer = new CountdownTimer(k_lobbyPollInterval);
+        Unity.Services.Lobbies.Models.Lobby _currentLobby;
+        string ConnectionType => encryption == EncryptionType.DTLS ? DtlsEncryption : WssEncryption;
+
+        private const float LobbyHeartbeatInterval = 20f;
+        private const float LobbyPollInterval = 65f;
+        private const string KeyJoinCode = "RelayJoinCode";
+        private const string DtlsEncryption = "dtls"; // Datagram Transport Layer Security
+        private const string WssEncryption = "wss"; // Web Socket Secure, use for WebGL builds
+
+        readonly CountdownTimer _heartbeatTimer = new(LobbyHeartbeatInterval);
+        readonly CountdownTimer _pollForUpdatesTimer = new(LobbyPollInterval);
 
         async void Start() {
-            Instance = this;
-            DontDestroyOnLoad(this);
             
             await Authenticate();
 
-            heartbeatTimer.OnTimerStop += async () => {
+            _heartbeatTimer.OnTimerStop += async () => {
                 await HandleHeartbeatAsync();
-                heartbeatTimer.Start();
+                _heartbeatTimer.Start();
             };
             
-            pollForUpdatesTimer.OnTimerStop += async () => {
+            _pollForUpdatesTimer.OnTimerStop += async () => {
                 await HandlePollForUpdatesAsync();
-                pollForUpdatesTimer.Start();
+                _pollForUpdatesTimer.Start();
             };
         }
 
@@ -93,20 +90,20 @@ namespace Kart {
                     IsPrivate = false
                 };
                 
-                currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
-                Debug.Log("Created lobby: " + currentLobby.Name + " with code " + currentLobby.LobbyCode);
+                _currentLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
+                Debug.Log("Created lobby: " + _currentLobby.Name + " with code " + _currentLobby.LobbyCode);
                 
-                heartbeatTimer.Start();
-                pollForUpdatesTimer.Start();
+                _heartbeatTimer.Start();
+                _pollForUpdatesTimer.Start();
 
-                await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, new UpdateLobbyOptions {
+                await LobbyService.Instance.UpdateLobbyAsync(_currentLobby.Id, new UpdateLobbyOptions {
                     Data = new Dictionary<string, DataObject> {
-                        {k_keyJoinCode, new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode)}
+                        {KeyJoinCode, new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode)}
                     }
                 });
 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(
-                    allocation, connectionType));
+                    allocation, ConnectionType));
 
                 NetworkManager.Singleton.StartHost();
 
@@ -117,14 +114,14 @@ namespace Kart {
 
         public async Task QuickJoinLobby() {
             try {
-                currentLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
-                pollForUpdatesTimer.Start();
+                _currentLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+                _pollForUpdatesTimer.Start();
                 
-                string relayJoinCode = currentLobby.Data[k_keyJoinCode].Value;
+                string relayJoinCode = _currentLobby.Data[KeyJoinCode].Value;
                 JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
                 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(
-                    joinAllocation, connectionType));
+                    joinAllocation, ConnectionType));
                 
                 NetworkManager.Singleton.StartClient();
                 
@@ -165,8 +162,8 @@ namespace Kart {
         
         async Task HandleHeartbeatAsync() {
             try {
-                await LobbyService.Instance.SendHeartbeatPingAsync(currentLobby.Id);
-                Debug.Log("Sent heartbeat ping to lobby: " + currentLobby.Name);
+                await LobbyService.Instance.SendHeartbeatPingAsync(_currentLobby.Id);
+                Debug.Log("Sent heartbeat ping to lobby: " + _currentLobby.Name);
             } catch (LobbyServiceException e) {
                 Debug.LogError("Failed to heartbeat lobby: " + e.Message);
             }
@@ -174,7 +171,7 @@ namespace Kart {
         
         async Task HandlePollForUpdatesAsync() {
             try {
-                Lobby lobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                Unity.Services.Lobbies.Models.Lobby lobby = await LobbyService.Instance.GetLobbyAsync(_currentLobby.Id);
                 Debug.Log("Polled for updates on lobby: " + lobby.Name);
             } catch (LobbyServiceException e) {
                 Debug.LogError("Failed to poll for updates on lobby: " + e.Message);

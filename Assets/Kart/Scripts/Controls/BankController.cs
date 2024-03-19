@@ -19,10 +19,10 @@ namespace kart.Kart.Scripts.Controls
 
         private void FixedUpdate()
         {
-            UpdateBanking();
+            HandleBanking();
         }
         
-        private void UpdateBanking()
+        private void HandleBanking()
         {
             var horizontalInput = _kartController.GetMoveInput().x;
             var targetBankAngle = -maxBankAngle * horizontalInput;

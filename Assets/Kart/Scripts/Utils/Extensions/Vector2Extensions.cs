@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Utilities {
+namespace kart.Kart.Scripts.Utils.Extensions {
     public static class Vector2Extensions {
         /// <summary>
         /// Sets any values of the Vector2
