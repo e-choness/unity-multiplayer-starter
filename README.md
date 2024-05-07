@@ -8,6 +8,8 @@ A code along project to get familiar with Unity multiplayer game setups.
 - [VContainer](https://github.com/hadashiA/VContainer) - A lightweight Unity dependency injection solution
 - [SceneReference](https://github.com/starikcetin/Eflatun.SceneReference) - An inspector scene reference tool
 - [Mirror](https://github.com/starikcetin/Eflatun.SceneReference) - A Unity network solution continued by the community.
+- [PlayFab Unity3D SDK](https://aka.ms/playfabunitysdkdownload) - A Microsoft game backend solution.
+- [PlayFab Unity Editor Extension](https://aka.ms/PlayFabUnityEdEx) - A Unity editor extension for setting up PlayFab.
 
 ## Art Assets
 
