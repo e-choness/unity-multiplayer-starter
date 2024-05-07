@@ -16,6 +16,7 @@
     "com.unity.multiplayer.playmode": "1.0.0",
     "com.unity.multiplayer.tools": "2.1.0",
     "com.unity.netcode.gameobjects": "1.8.1",
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.probuilder": "6.0.1",
     "com.unity.render-pipelines.universal": "17.0.3",
     "com.unity.services.lobby": "1.2.1",

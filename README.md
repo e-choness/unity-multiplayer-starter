@@ -5,8 +5,9 @@ A code along project to get familiar with Unity multiplayer game setups.
 ## Unity Version and Packages
 
 - [Unity 6 Beta (6000.0.0b16)](https://unity.com/releases/editor/beta)
-- [VContainer - A lightweight Unity dependency injection solution](https://github.com/hadashiA/VContainer)
-- [SceneReference - An inspector scene reference tool](https://github.com/starikcetin/Eflatun.SceneReference)
+- [VContainer](https://github.com/hadashiA/VContainer) - A lightweight Unity dependency injection solution
+- [SceneReference](https://github.com/starikcetin/Eflatun.SceneReference) - An inspector scene reference tool
+- [Mirror](https://github.com/starikcetin/Eflatun.SceneReference) - A Unity network solution continued by the community.
 
 ## Art Assets
 
