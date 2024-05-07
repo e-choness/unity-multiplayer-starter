@@ -477,6 +477,18 @@ PrefabInstance:
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 1524411113276028, guid: 1904e0016f53a184baaf644271c085a5, type: 3}
+    - target: {fileID: 5665527545850088466, guid: 16876417fed29634a835c9729d11f435, type: 3}
+      propertyPath: timeInterpolationGui
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665527545850088466, guid: 16876417fed29634a835c9729d11f435, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665527545850088466, guid: 16876417fed29634a835c9729d11f435, type: 3}
+      propertyPath: 'spawnPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1524411113276028, guid: 1904e0016f53a184baaf644271c085a5, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -535,7 +547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetX: 0
-  offsetY: 320
+  offsetY: 150
 --- !u!1001 &6693764904347353862
 PrefabInstance:
   m_ObjectHideFlags: 0
