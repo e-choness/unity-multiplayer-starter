@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static InputControls;
+using static UnityEngine.InputSystem.InputAction;
 
 namespace kart.RPGMonster.Scripts.Inputs
 {
@@ -29,7 +29,7 @@ namespace kart.RPGMonster.Scripts.Inputs
             _input.Disable();
         }
 
-        public void OnMove(InputAction.CallbackContext context)
+        public void OnMove(CallbackContext context)
         {
             //...
         }

@@ -1,9 +1,10 @@
 using kart.RPGMonster.Scripts.Inputs;
 using UnityEngine;
+using Mirror;
 
 namespace kart.RPGMonster.Scripts
 {
-    public class Controller : MonoBehaviour
+    public class Controller : NetworkBehaviour
     {
         [SerializeField] private float speed = 0.01f;
         [SerializeField] private ControlReader controlReader;
@@ -35,6 +36,8 @@ namespace kart.RPGMonster.Scripts
 
         private void Move()
         {
+            if (!authority) return;
+            
             var movement = new Vector3(controlReader.Move.x, 0, controlReader.Move.y) * speed;
             transform.position += movement;
 
