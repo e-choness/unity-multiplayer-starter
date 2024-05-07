@@ -39,8 +39,8 @@ namespace kart.Kart.Scripts.Controls
                     _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX;
 
                     // Gradually changes z to 0 overtime using current  
-                    var newZ = Mathf.SmoothDamp(_rigidbody.velocity.z, 0, ref _brakeVelocity, 1.0f);
-                    _rigidbody.velocity = _rigidbody.velocity.With(z: newZ);
+                    var newZ = Mathf.SmoothDamp(_rigidbody.linearVelocity.z, 0, ref _brakeVelocity, 1.0f);
+                    _rigidbody.linearVelocity = _rigidbody.linearVelocity.With(z: newZ);
 
                     axle.leftWheel.brakeTorque = brakeTorgue;
                     axle.rightWheel.brakeTorque = brakeTorgue;

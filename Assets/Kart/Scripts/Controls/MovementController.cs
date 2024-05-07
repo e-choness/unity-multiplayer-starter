@@ -61,7 +61,7 @@ namespace kart.Kart.Scripts.Controls
 
         private void Move()
         {
-            _kartVelocity = transform.InverseTransformDirection(_rigidbody.velocity);
+            _kartVelocity = transform.InverseTransformDirection(_rigidbody.linearVelocity);
             var input = _kartController.GetMoveInput();
             if (_driftController.IsGrounded())
             {
@@ -100,8 +100,8 @@ namespace kart.Kart.Scripts.Controls
             var targetSpeed = input.y * maxSpeed;
             var forwardWithoutY = transform.forward.With(y: 0).normalized;
 
-            _rigidbody.velocity = Vector3.Lerp(
-                _rigidbody.velocity,
+            _rigidbody.linearVelocity = Vector3.Lerp(
+                _rigidbody.linearVelocity,
                 forwardWithoutY * targetSpeed,
                 1 / ServerTick // Minimum time between server ticks
             );
@@ -109,8 +109,8 @@ namespace kart.Kart.Scripts.Controls
 
         private void ApplyDownForce()
         {
-            var speedFactor = Mathf.Clamp01(_rigidbody.velocity.magnitude / maxSpeed);
-            var lateralGravity = Mathf.Abs(Vector3.Dot(_rigidbody.velocity, transform.right));
+            var speedFactor = Mathf.Clamp01(_rigidbody.linearVelocity.magnitude / maxSpeed);
+            var lateralGravity = Mathf.Abs(Vector3.Dot(_rigidbody.linearVelocity, transform.right));
             var downForceFactor = Mathf.Max(speedFactor, lateralGravity / lateralGravityScale);
             _rigidbody.AddForce(-transform.up * (downForce * _rigidbody.mass * downForceFactor ));
         }
@@ -118,7 +118,7 @@ namespace kart.Kart.Scripts.Controls
         private void ShiftCenterOfMass(float verticalInput)
         {
             var centerOfMassChanges = 
-                _rigidbody.velocity.magnitude > ThresholdSpeed
+                _rigidbody.linearVelocity.magnitude > ThresholdSpeed
                 ? new Vector3(0.0f, 0.0f, 
                     Mathf.Abs(verticalInput) > 0.1f
                     ? Mathf.Sign(verticalInput) * CenterOfMassOffset
@@ -130,8 +130,8 @@ namespace kart.Kart.Scripts.Controls
 
         private void HandleAirBornMovement()
         {
-            var velocity = _rigidbody.velocity;
-            _rigidbody.velocity = Vector3.Lerp(
+            var velocity = _rigidbody.linearVelocity;
+            _rigidbody.linearVelocity = Vector3.Lerp(
                 velocity,
                 velocity + Vector3.down * _gravity,
                 Time.deltaTime * _gravity

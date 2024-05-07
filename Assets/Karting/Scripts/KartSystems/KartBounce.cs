@@ -76,7 +76,7 @@ namespace KartGame.KartSystems
                     reflectionVector = incidentVector - 2 * Vector3.Dot(incidentVector, hitNormal) * hitNormal;
                     reflectionVector.y = 0;
 
-                    kart.Rigidbody.velocity /= 2;
+                    kart.Rigidbody.linearVelocity /= 2;
                     // Apply the bounce impulse with the reflectionVector
                     kart.Rigidbody.AddForce(reflectionVector.normalized * BounceFactor, ForceMode.Impulse);
 

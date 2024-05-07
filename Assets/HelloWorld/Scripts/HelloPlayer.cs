@@ -60,7 +60,7 @@ namespace kart.HelloWorld.Scripts
         private void Move()
         {
             if (!IsOwner) return;
-            _rigidbody.velocity = new Vector3(_inputController.Movememt.x, 0.0f, _inputController.Movememt.y) * speed;
+            _rigidbody.linearVelocity = new Vector3(_inputController.Movememt.x, 0.0f, _inputController.Movememt.y) * speed;
         }
 
         [Rpc(SendTo.ClientsAndHost)]
