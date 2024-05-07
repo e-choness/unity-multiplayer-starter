@@ -8,6 +8,11 @@ A code along project to get familiar with Unity multiplayer game setups.
 - [VContainer - A lightweight Unity dependency injection solution](https://github.com/hadashiA/VContainer)
 - [SceneReference - An inspector scene reference tool](https://github.com/starikcetin/Eflatun.SceneReference)
 
+## Art Assets
+
+- [Low Poly Models](https://opengameart.org/content/modular-karts) made by [@Zsky_01](https://www.patreon.com/Zsky)
+- [RPG Monster Duo PBR Polyart](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-duo-pbr-polyart-157762)
+
 ## Prerequisites
 
 - It would be nice to look at official tutorial resources
@@ -84,4 +89,4 @@ public struct CustomData : INetworkSerializable{
 ## Credits
 
 - [Multiplayer Kart](https://github.com/adammyhre/Unity-Multiplayer-Kart) made by [adammyhre](https://github.com/adammyhre)
-- [Low Poly Models](https://opengameart.org/content/modular-karts) made by [@Zsky_01](https://www.patreon.com/Zsky)
+
