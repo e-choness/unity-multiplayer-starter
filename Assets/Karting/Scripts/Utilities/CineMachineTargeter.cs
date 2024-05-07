@@ -1,4 +1,4 @@
-﻿using Cinemachine;
+﻿using Unity.Cinemachine;
 using UnityEngine;
 
 namespace KartGame.Utilities
@@ -6,20 +6,20 @@ namespace KartGame.Utilities
     /// <summary>
     /// A preview utility to help cycle the Cinemachine Camera to look at and follow various targets.
     /// </summary>
-    [RequireComponent(typeof(CinemachineVirtualCamera))]
-    public class CineMachineTargeteer : MonoBehaviour
+    [RequireComponent(typeof(CinemachineCamera))]
+    public class CineMachineTargeter : MonoBehaviour
     {
         [Tooltip("What gameObjects do we want to look at?")]
         public Transform[] Targets;
         [Tooltip("Which key allows us to switch targets? By default, we use the Spacebar.")]
         public KeyCode CyclingKey = KeyCode.Space;
 
-        CinemachineVirtualCamera m_VirtualCam;
+        CinemachineCamera m_VirtualCam;
         int m_Index;
 
         void Start()
         {
-            m_VirtualCam = GetComponent<CinemachineVirtualCamera>();
+            m_VirtualCam = GetComponent<CinemachineCamera>();
             m_Index = 0;
         }
 

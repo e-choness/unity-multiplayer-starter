@@ -138,7 +138,7 @@ namespace KartGame.AI
                         var checkpoint = Colliders[m_CheckpointIndex].transform;
                         transform.localRotation = checkpoint.rotation;
                         transform.position = checkpoint.position;
-                        m_Kart.Rigidbody.velocity = default;
+                        m_Kart.Rigidbody.linearVelocity = default;
                         m_Steering = 0f;
 						m_Acceleration = m_Brake = false; 
                     }
@@ -199,7 +199,7 @@ namespace KartGame.AI
                 return;
 
             var direction = (nextCollider.transform.position - m_Kart.transform.position).normalized;
-            sensor.AddObservation(Vector3.Dot(m_Kart.Rigidbody.velocity.normalized, direction));
+            sensor.AddObservation(Vector3.Dot(m_Kart.Rigidbody.linearVelocity.normalized, direction));
 
             if (ShowRaycasts)
                 Debug.DrawLine(AgentSensorTransform.position, nextCollider.transform.position, Color.magenta);
@@ -249,9 +249,9 @@ namespace KartGame.AI
             var next = (m_CheckpointIndex + 1) % Colliders.Length;
             var nextCollider = Colliders[next];
             var direction = (nextCollider.transform.position - m_Kart.transform.position).normalized;
-            var reward = Vector3.Dot(m_Kart.Rigidbody.velocity.normalized, direction);
+            var reward = Vector3.Dot(m_Kart.Rigidbody.linearVelocity.normalized, direction);
 
-            if (ShowRaycasts) Debug.DrawRay(AgentSensorTransform.position, m_Kart.Rigidbody.velocity, Color.blue);
+            if (ShowRaycasts) Debug.DrawRay(AgentSensorTransform.position, m_Kart.Rigidbody.linearVelocity, Color.blue);
 
             // Add rewards if the agent is heading in the right direction
             AddReward(reward * TowardsCheckpointReward);
@@ -268,7 +268,7 @@ namespace KartGame.AI
                     var collider = Colliders[m_CheckpointIndex];
                     transform.localRotation = collider.transform.rotation;
                     transform.position = collider.transform.position;
-                    m_Kart.Rigidbody.velocity = default;
+                    m_Kart.Rigidbody.linearVelocity = default;
                     m_Acceleration = false;
                     m_Brake = false;
                     m_Steering = 0f;
