@@ -2,6 +2,12 @@
 
 A code along project to get familiar with Unity multiplayer game setups.
 
+## Unity Version and Packages
+
+- [Unity 6 Beta (6000.0.0b16)](https://unity.com/releases/editor/beta)
+- [VContainer - A lightweight Unity dependency injection solution](https://github.com/hadashiA/VContainer)
+- [SceneReference - An inspector scene reference tool](https://github.com/starikcetin/Eflatun.SceneReference)
+
 ## Prerequisites
 
 - It would be nice to look at official tutorial resources
@@ -77,4 +83,5 @@ public struct CustomData : INetworkSerializable{
 
 ## Credits
 
-[Low Poly Models](https://opengameart.org/content/modular-karts) made by [@Zsky_01](https://www.patreon.com/Zsky)
+- [Multiplayer Kart](https://github.com/adammyhre/Unity-Multiplayer-Kart) made by [adammyhre](https://github.com/adammyhre)
+- [Low Poly Models](https://opengameart.org/content/modular-karts) made by [@Zsky_01](https://www.patreon.com/Zsky)
