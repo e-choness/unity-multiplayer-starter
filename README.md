@@ -1,4 +1,4 @@
-# Unity Multiplayer StarterGame
+# Unity Multiplayer Starter Game
 
 A code along project to get familiar with Unity multiplayer game setups.
 
