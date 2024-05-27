@@ -1,19 +1,22 @@
 using System;
+using kart.RPGMonster.Scripts.UI.Models;
 using UnityEngine;
 
-namespace kart.RPGMonster.Scripts.UI
+namespace kart.RPGMonster.Scripts.UI.Controllers
 {
     [Serializable]
     public enum MenuSelection
     {
         RootMenu,
         PlayFabLogin,
+        PlayFabLoginWithUserPass,
         AzureLogin
     }
     public class ControlPanel : MonoBehaviour
     {
         private MenuSelection _selection;
 
+        [SerializeField] private PlayerAccount account;
         private GameObject _playFab;
         private GameObject _azure;
 
@@ -25,10 +28,22 @@ namespace kart.RPGMonster.Scripts.UI
 
         private void OnGUI()
         {
-            if (_selection == MenuSelection.RootMenu)
+            switch (_selection)
             {
-                GUILayout.Window(0, new Rect(0, 0, 300, 0), OptionsWindow, "Options");
-                
+                case MenuSelection.RootMenu:
+                    GUILayout.Window(0, new Rect(0, 0, 300, 0), OptionsWindow, "Options");
+                    break;
+                case MenuSelection.PlayFabLogin:
+                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithPlayFabWindow, "Login with PlayFab");
+                    break;
+                case MenuSelection.PlayFabLoginWithUserPass:
+                    break;
+                case MenuSelection.AzureLogin:
+                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithAzureWindow, "Login with Azure");
+                    break;
+                default:
+                    Debug.LogWarning("ControlPanel - Not a valid login method.");
+                    break;
             }
         }
 
@@ -38,6 +53,11 @@ namespace kart.RPGMonster.Scripts.UI
             {
                 // TODO: button to login with PlayFab
                 _selection = MenuSelection.PlayFabLogin;
+            }
+            
+            if(GUILayout.Button("Login with PlayFab User Pass")){}
+            {
+                _selection = MenuSelection.PlayFabLoginWithUserPass;
             }
 
             if (GUILayout.Button("Login with Azure"))
@@ -53,11 +73,14 @@ namespace kart.RPGMonster.Scripts.UI
         private void LoginWithPlayFabWindow(int windowID)
         {
             GUILayout.Label("Display name:");
-            {
-                // TODO: button to each sub-window
-            }
+            account.displayName = GUILayout.TextField(account.displayName, 20);
         }
 
+        private void LoginWithUserPass(int windowID)
+        {
+            
+        }
+        
         private void LoginWithAzureWindow(int windowID)
         {
             if (GUILayout.Button("Login with Azure"))

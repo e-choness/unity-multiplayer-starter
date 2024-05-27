@@ -21,11 +21,9 @@ namespace kart.RPGMonster.Scripts.Backend.Models
 
         public void LoginWithCustomId(string displayName)
         {
-            var guid = Guid.NewGuid().ToString();
-
             var request = new LoginWithCustomIDRequest
             {
-                CustomId = guid,
+                CustomId = SystemInfo.deviceUniqueIdentifier,
                 CreateAccount = true
             };
             
