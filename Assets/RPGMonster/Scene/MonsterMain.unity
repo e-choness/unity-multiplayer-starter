@@ -416,6 +416,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &682905938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682905939}
+  m_Layer: 0
+  m_Name: Azure
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682905939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682905938}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.40418, y: 1.2183509, z: 8.886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1073541752093998232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,6 +683,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2817765935685373059, guid: d1ab5ac24a7b4c1448320e2d86dbef95, type: 3}
+      propertyPath: account.username
+      value: The Nameless One
+      objectReference: {fileID: 0}
     - target: {fileID: 4246747962193271571, guid: d1ab5ac24a7b4c1448320e2d86dbef95, type: 3}
       propertyPath: m_Name
       value: ControlPanel
@@ -671,3 +706,4 @@ SceneRoots:
   - {fileID: 6693764904347353862}
   - {fileID: 3521913730448336543}
   - {fileID: 1073541752093998232}
+  - {fileID: 682905939}

@@ -1,28 +1,21 @@
-using System;
+using kart.RPGMonster.Scripts.Backend.Services;
 using kart.RPGMonster.Scripts.UI.Models;
+using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 
 namespace kart.RPGMonster.Scripts.UI.Controllers
 {
-    [Serializable]
-    public enum MenuSelection
-    {
-        RootMenu,
-        PlayFabLogin,
-        PlayFabLoginWithUserPass,
-        AzureLogin
-    }
     public class ControlPanel : MonoBehaviour
     {
-        private MenuSelection _selection;
+        private MenuSelection _selection = MenuSelection.RootMenu;
 
-        [SerializeField] private PlayerAccount account;
-        private GameObject _playFab;
+        private static readonly PlayerAccount Account = new();
+        private PlayFabAuth _playFabAuth;
         private GameObject _azure;
 
         void Start()
         {
-            _playFab = GameObject.Find("PlayFab");
+            _playFabAuth = GameObject.Find("PlayFabAuth").GetComponent<PlayFabAuth>();
             _azure = GameObject.Find("Azure");
         }
 
@@ -37,9 +30,7 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
                     GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithPlayFabWindow, "Login with PlayFab");
                     break;
                 case MenuSelection.PlayFabLoginWithUserPass:
-                    break;
-                case MenuSelection.AzureLogin:
-                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithAzureWindow, "Login with Azure");
+                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithUserPassWindow, "Login with Userpass");
                     break;
                 default:
                     Debug.LogWarning("ControlPanel - Not a valid login method.");
@@ -51,19 +42,13 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
         {
             if (GUILayout.Button("Login with PlayFab"))
             {
-                // TODO: button to login with PlayFab
                 _selection = MenuSelection.PlayFabLogin;
             }
             
-            if(GUILayout.Button("Login with PlayFab User Pass")){}
-            {
-                _selection = MenuSelection.PlayFabLoginWithUserPass;
-            }
-
-            if (GUILayout.Button("Login with Azure"))
-            {
-                _selection = MenuSelection.AzureLogin;
-            }
+            // if (GUILayout.Button("Login with Azure"))
+            // {
+            //     _selection = MenuSelection.AzureLogin;
+            // }
             
             GUILayout.Space(10);
             
@@ -73,21 +58,37 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
         private void LoginWithPlayFabWindow(int windowID)
         {
             GUILayout.Label("Display name:");
-            account.displayName = GUILayout.TextField(account.displayName, 20);
+            Account.displayName = GUILayout.TextField(Account.displayName, 20);
+            
+            if (!Account.displayName.IsNullOrWhiteSpace())
+            {
+                if (GUILayout.Button("Login as Guest"))
+                {
+                    _playFabAuth.LoginWithCustomId(Account.displayName);
+                    _selection = MenuSelection.RootMenu;
+                }
+                if (GUILayout.Button("Login with Username and Password"))
+                {
+                    _selection = MenuSelection.PlayFabLoginWithUserPass;
+                }
+            }
+            
+            if (GUILayout.Button("Cancel"))
+            {
+                _selection = MenuSelection.RootMenu;
+            }
         }
 
-        private void LoginWithUserPass(int windowID)
+        private void LoginWithUserPassWindow(int windowID)
         {
-            
+            GUILayout.Label("Username:");
+            Account.username = GUILayout.TextField(Account.username, 25);
+            GUILayout.Label("Password:");
+            Account.password = GUILayout.PasswordField(Account.password, '*', 20);
         }
         
         private void LoginWithAzureWindow(int windowID)
         {
-            if (GUILayout.Button("Login with Azure"))
-            {
-                // TODO: button to login with Azure, something like _azure.GetComponent<AzureAuth>().LoginWithAzure();
-            }
-
             if (GUILayout.Button("Cancel"))
             {
                 _selection = MenuSelection.RootMenu;
