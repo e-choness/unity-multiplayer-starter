@@ -1,17 +1,19 @@
-using System;
+using kart.RPGMonster.Scripts.Backend.Models;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using PlayFabSettings = kart.RPGMonster.Scripts.Backend.Models.PlayFabSettings;
 
-namespace kart.RPGMonster.Scripts.Backend.Models
+namespace kart.RPGMonster.Scripts.Backend.Services
 {
     public class PlayFabAuth : MonoBehaviour
     {
-        public static PlayFabSettings Settings;
-        public string DisplayName;
+        private string _displayName;
+        
+        public static PlayFabSettings Settings = new();
         private void Awake()
         {
-            Settings = new();
+            Settings = new PlayFabSettings();
         }
 
         private void OnDestroy()
@@ -21,13 +23,13 @@ namespace kart.RPGMonster.Scripts.Backend.Models
 
         public void LoginWithCustomId(string displayName)
         {
-            var guid = Guid.NewGuid().ToString();
-
             var request = new LoginWithCustomIDRequest
             {
-                CustomId = guid,
+                CustomId = SystemInfo.deviceUniqueIdentifier,
                 CreateAccount = true
             };
+            
+            _displayName = displayName;
             
             PlayFabClientAPI.LoginWithCustomID(request, OnLoginWithCustomIdSuccess, PlayFabErrorHandler.HandleError);
         }
@@ -37,8 +39,9 @@ namespace kart.RPGMonster.Scripts.Backend.Models
             if (result == null) return;
             
             Debug.Log("PlayFabAuth - Login with CustomID succeeded.");
+            
             Settings.EntityId = result.EntityToken.Entity.Id;
-            Settings.DisplayName = DisplayName;
+            Settings.DisplayName = _displayName;
             UpdateDisplayName(Settings.DisplayName);
         }
 
