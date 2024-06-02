@@ -12,11 +12,13 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
         private static readonly PlayerAccount Account = new();
         private PlayFabAuth _playFabAuth;
         private GameObject _azure;
+        private PlayFabEconomy _playFabEconomy;
 
         void Start()
         {
             _playFabAuth = GameObject.Find("PlayFabAuth").GetComponent<PlayFabAuth>();
             _azure = GameObject.Find("Azure");
+            _playFabEconomy = GameObject.Find("PlayFabEconomy").GetComponent<PlayFabEconomy>();
         }
 
         private void OnGUI()
@@ -24,13 +26,19 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             switch (_selection)
             {
                 case MenuSelection.RootMenu:
-                    GUILayout.Window(0, new Rect(0, 0, 300, 0), OptionsWindow, "Options");
+                    AddWindow(_selection, OptionsWindow);
                     break;
                 case MenuSelection.PlayFabLogin:
-                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithPlayFabWindow, "Login with PlayFab");
+                    AddWindow(_selection, LoginWithPlayFabWindow);
                     break;
                 case MenuSelection.PlayFabLoginWithUserPass:
-                    GUILayout.Window(0, new Rect(0, 0, 300, 0), LoginWithUserPassWindow, "Login with Userpass");
+                    AddWindow(_selection, LoginWithUserPassWindow);
+                    break;
+                case MenuSelection.AzureLogin:
+                    AddWindow(_selection, LoginWithAzureWindow);
+                    break;
+                case MenuSelection.PlayFabEconomy:
+                    AddWindow(_selection, PlayFabEconomyWindow);
                     break;
                 default:
                     Debug.LogWarning("ControlPanel - Not a valid login method.");
@@ -40,15 +48,10 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
 
         private void OptionsWindow(int windowID)
         {
-            if (GUILayout.Button("Login with PlayFab"))
-            {
-                _selection = MenuSelection.PlayFabLogin;
-            }
-            
-            // if (GUILayout.Button("Login with Azure"))
-            // {
-            //     _selection = MenuSelection.AzureLogin;
-            // }
+            AddButton("Login With PlayFab");
+            AddButton("Login With PlayFab User Pass");
+            AddButton("Login With Azure");
+            AddButton("PlayFab Economy");
             
             GUILayout.Space(10);
             
@@ -67,16 +70,10 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
                     _playFabAuth.LoginWithCustomId(Account.displayName);
                     _selection = MenuSelection.RootMenu;
                 }
-                if (GUILayout.Button("Login with Username and Password"))
-                {
-                    _selection = MenuSelection.PlayFabLoginWithUserPass;
-                }
+                AddButton("Login with Username and Password");
             }
-            
-            if (GUILayout.Button("Cancel"))
-            {
-                _selection = MenuSelection.RootMenu;
-            }
+
+            AddButton("Cancel");
         }
 
         private void LoginWithUserPassWindow(int windowID)
@@ -85,14 +82,57 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             Account.username = GUILayout.TextField(Account.username, 25);
             GUILayout.Label("Password:");
             Account.password = GUILayout.PasswordField(Account.password, '*', 20);
+            
+            AddButton("Cancel");
         }
         
         private void LoginWithAzureWindow(int windowID)
         {
-            if (GUILayout.Button("Cancel"))
+            AddButton("Cancel");
+        }
+
+        private void PlayFabEconomyWindow(int windowID)
+        {
+            AddButton("Cancel");
+        }
+
+        private void AddWindow(MenuSelection selection, GUI.WindowFunction windowFunc)
+        {
+            GUILayout.Window(0, new Rect(0, 0, 300, 0), windowFunc, GetText(selection));
+        }
+
+        private void AddButton(string buttonText)
+        {
+            if (GUILayout.Button(buttonText))
             {
-                _selection = MenuSelection.RootMenu;
+                _selection = GetSelection(buttonText);
             }
+        }
+
+        private static MenuSelection GetSelection(string buttonText)
+        {
+            return buttonText switch
+            {
+                "Login With PlayFab" => MenuSelection.PlayFabLogin,
+                "Login With PlayFab User Pass" => MenuSelection.PlayFabLoginWithUserPass,
+                "Login With Azure" =>MenuSelection.AzureLogin,
+                "PlayFab Economy" => MenuSelection.PlayFabEconomy,
+                "Cancel" => MenuSelection.RootMenu,
+                _ => MenuSelection.RootMenu
+            };
+        }
+
+        private static string GetText(MenuSelection selection)
+        {
+            return selection switch
+            {
+                MenuSelection.PlayFabLogin => "Login With PlayFab",
+                MenuSelection.PlayFabLoginWithUserPass => "Login With PlayFab User Pass",
+                MenuSelection.AzureLogin => "Login With Azure",
+                MenuSelection.PlayFabEconomy => "PlayFab Economy",
+                MenuSelection.RootMenu => "Cancel",
+                _ => string.Empty
+            };
         }
     }
 }
