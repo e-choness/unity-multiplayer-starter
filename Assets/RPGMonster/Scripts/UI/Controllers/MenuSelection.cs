@@ -8,6 +8,7 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
         RootMenu,
         PlayFabLogin,
         PlayFabLoginWithUserPass,
-        AzureLogin
+        AzureLogin,
+        PlayFabEconomy
     }
 }
