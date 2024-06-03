@@ -8,7 +8,7 @@ namespace kart.RPGMonster.Scripts.Backend.Models
     {
         public static event Action<PlayFabError> GettingError;
 
-        public static void HandleError(PlayFabError error)
+        public static void Handle(PlayFabError error)
         {
             var errorMessage = $"PlayFab is getting error - http code: {error.HttpCode} detailed report: {error.GenerateErrorReport()}";
             Debug.LogError(errorMessage);

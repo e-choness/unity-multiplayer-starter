@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using PlayFab.ClientModels;
+using Unity.VisualScripting;
+using UnityEngine;
+using CatalogItem = PlayFab.EconomyModels.CatalogItem;
 
 namespace kart.RPGMonster.Scripts.UI.Models
 {
@@ -23,9 +26,10 @@ namespace kart.RPGMonster.Scripts.UI.Models
         {
             var text = "";
 
-            text += string.Join("\n", items.Select((item, index) => $"{index} | {item.DisplayName} " +
-                                                                    $"{(item.VirtualCurrencyPrices.Count!=0 ? item.VirtualCurrencyPrices["MC"]+ "MC" : "N/A")}"));
+            text += string.Join("\n", items.Select((item, index) => $"{index} | {item.Title.FirstOrDefault().Value} " +
+                                                                    $" | Price: {item.PriceOptions.Prices.FirstOrDefault()?.Amounts.FirstOrDefault()?.Amount}"));
             text += "\n\n\n\n\n";
+            Debug.Log($"ShopUI - UpdateTextArea() - items: {text}");
             _textArea = text;
         }
         

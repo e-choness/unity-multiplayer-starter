@@ -31,7 +31,7 @@ namespace kart.RPGMonster.Scripts.Backend.Services
             
             _displayName = displayName;
             
-            PlayFabClientAPI.LoginWithCustomID(request, OnLoginWithCustomIdSuccess, PlayFabErrorHandler.HandleError);
+            PlayFabClientAPI.LoginWithCustomID(request, OnLoginWithCustomIdSuccess, PlayFabErrorHandler.Handle);
         }
 
         private void OnLoginWithCustomIdSuccess(LoginResult result)
@@ -49,7 +49,7 @@ namespace kart.RPGMonster.Scripts.Backend.Services
         {
             var request = new UpdateUserTitleDisplayNameRequest { DisplayName = displayName };
             
-            PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnUpdateDisplayNameSuccess, PlayFabErrorHandler.HandleError);
+            PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnUpdateDisplayNameSuccess, PlayFabErrorHandler.Handle);
         }
 
         private void OnUpdateDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
