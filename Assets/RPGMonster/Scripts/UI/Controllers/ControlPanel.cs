@@ -12,7 +12,7 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
 
         // Data models
         private static readonly PlayerAccount Account = new();
-        private static readonly EconomyView EconomyView = new();
+        private static readonly EconomyElements EconomyElements = new();
         
         // Components
         private PlayFabAuth _playFabAuth;
@@ -120,13 +120,13 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
 
         private void InitEconomyView()
         {
-            if(EconomyView.Title != "") GUILayout.Label(EconomyView.Title);
+            if(EconomyElements.Title != "") GUILayout.Label(EconomyElements.Title);
 
-            // EconomyView.TextArea = ShipUI.GetTextArea();
-            EconomyView.TextArea = GUILayout.TextArea(EconomyView.TextArea, 200);
+            EconomyElements.TextArea = ShopUI.GetTextArea();
+            EconomyElements.TextArea = GUILayout.TextArea(EconomyElements.TextArea, 200);
 
-            // EconomyView.VirtualCurrencyLabel = ShopUI.GetVirtualCurrencyLabel();
-            if(EconomyView.VirtualCurrencyLabel != "") GUILayout.Label(EconomyView.VirtualCurrencyLabel);
+            EconomyElements.VirtualCurrencyLabel = ShopUI.GetVirtualCurrencyLabel();
+            if(EconomyElements.VirtualCurrencyLabel != "") GUILayout.Label(EconomyElements.VirtualCurrencyLabel);
         }
 
         private void AddCatalogButton()
@@ -134,7 +134,7 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             if (GUILayout.Button("Get Catalog Items"))
             {
                 _playFabEconomy.GetCatalogItems();
-                EconomyView.Title = "Catalog Items";
+                EconomyElements.Title = "Catalog Items";
             }
         }
 
@@ -143,7 +143,7 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             if (GUILayout.Button("Get Player Inventory + Virtual Currency"))
             {
                 _playFabEconomy.GetInventory();
-                EconomyView.Title = "Player Inventory";
+                EconomyElements.Title = "Player Inventory";
             }
         }
 
@@ -151,16 +151,16 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
         {
             if (GUILayout.Button($"Purchase this item {number}:"))
             {
-                _playFabEconomy.PurchaseItem(EconomyView.Item);
+                _playFabEconomy.PurchaseItem(EconomyElements.Item);
             }
-            EconomyView.Item = GUILayout.TextField(EconomyView.Item, 100);
+            EconomyElements.Item = GUILayout.TextField(EconomyElements.Item, 100);
         }
 
         private void AddBuyFromStore()
         {
             if (GUILayout.Button("Buy From Store"))
             {
-                _playFabEconomy.BuyFromStore(EconomyView.Item);
+                _playFabEconomy.BuyFromStore(EconomyElements.Item);
             }
         }
 

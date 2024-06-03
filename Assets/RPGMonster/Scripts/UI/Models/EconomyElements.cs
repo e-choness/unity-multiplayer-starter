@@ -1,6 +1,6 @@
 namespace kart.RPGMonster.Scripts.UI.Models
 {
-    public class EconomyView
+    public class EconomyElements
     {
         public string Title { get; set; } = "";
         public string Item { get; set; } = "";
