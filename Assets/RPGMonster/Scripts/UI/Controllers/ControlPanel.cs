@@ -7,9 +7,14 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
 {
     public class ControlPanel : MonoBehaviour
     {
+        // Menu selection
         private MenuSelection _selection = MenuSelection.RootMenu;
 
+        // Data models
         private static readonly PlayerAccount Account = new();
+        private static readonly EconomyElements EconomyElements = new();
+        
+        // Components
         private PlayFabAuth _playFabAuth;
         private GameObject _azure;
         private PlayFabEconomy _playFabEconomy;
@@ -52,10 +57,9 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             AddButton("Login With PlayFab User Pass");
             AddButton("Login With Azure");
             AddButton("PlayFab Economy");
+            // TODO: Add additional buttons
             
             GUILayout.Space(10);
-            
-            // TODO: Add additional buttons
         }
 
         private void LoginWithPlayFabWindow(int windowID)
@@ -93,7 +97,71 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
 
         private void PlayFabEconomyWindow(int windowID)
         {
+            InitEconomyView();
+            
+            GUILayout.Space(10);
+
+            AddCatalogButton();
+
+            AddInventoryButton();
+            
+            GUILayout.Space(10);
+            
+            AddPurchaseItemButton(100);
+
+            GUILayout.Space(10);
+            
+            AddBuyFromStore();
+            
+            GUILayout.Space(10);
+            
             AddButton("Cancel");
+        }
+
+        private void InitEconomyView()
+        {
+            if(EconomyElements.Title != "") GUILayout.Label(EconomyElements.Title);
+
+            EconomyElements.TextArea = ShopUI.GetTextArea();
+            EconomyElements.TextArea = GUILayout.TextArea(EconomyElements.TextArea, 200);
+
+            EconomyElements.VirtualCurrencyLabel = ShopUI.GetVirtualCurrencyLabel();
+            if(EconomyElements.VirtualCurrencyLabel != "") GUILayout.Label(EconomyElements.VirtualCurrencyLabel);
+        }
+
+        private void AddCatalogButton()
+        {
+            if (GUILayout.Button("Get Catalog Items"))
+            {
+                _playFabEconomy.GetCatalogItems();
+                EconomyElements.Title = "Catalog Items";
+            }
+        }
+
+        private void AddInventoryButton()
+        {
+            if (GUILayout.Button("Get Player Inventory + Virtual Currency"))
+            {
+                _playFabEconomy.GetInventory();
+                EconomyElements.Title = "Player Inventory";
+            }
+        }
+
+        private void AddPurchaseItemButton(int number)
+        {
+            if (GUILayout.Button($"Purchase this item {number}:"))
+            {
+                _playFabEconomy.PurchaseItem(EconomyElements.Item);
+            }
+            EconomyElements.Item = GUILayout.TextField(EconomyElements.Item, 100);
+        }
+
+        private void AddBuyFromStore()
+        {
+            if (GUILayout.Button("Buy From Store"))
+            {
+                _playFabEconomy.BuyFromStore(EconomyElements.Item);
+            }
         }
 
         private void AddWindow(MenuSelection selection, GUI.WindowFunction windowFunc)
