@@ -4,16 +4,24 @@ namespace kart.RPGMonster.Scripts.Backend.Services
 {
     public class PlayFabEconomy : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public void GetCatalogItems()
         {
-        
+            Debug.Log("PlayFab Economy - GetCatalogItems()");
         }
 
-        // Update is called once per frame
-        void Update()
+        public void GetInventory()
         {
-        
+            Debug.Log("PlayFab Economy - GetInventory()");
+        }
+
+        public void PurchaseItem(string economyViewItem)
+        {
+            Debug.Log("PlayFab Economy - PurchaseItem()");
+        }
+
+        public void BuyFromStore(string economyViewItem)
+        {
+            Debug.Log("PlayFab Economy - BuyFromStore()");
         }
     }
 }
