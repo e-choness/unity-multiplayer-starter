@@ -40,10 +40,7 @@ namespace kart.RPGMonster.Scripts.Backend.Services
                 return;
             }
             
-            foreach (var item in response.Items)
-            {
-                _catalogItems.Add(item);
-            }
+            _catalogItems = response.Items;
             
             ShopUI.UpdateTextArea(_catalogItems);
         }
