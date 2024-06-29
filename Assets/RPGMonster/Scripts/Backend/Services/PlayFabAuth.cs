@@ -45,7 +45,7 @@ namespace kart.RPGMonster.Scripts.Backend.Services
 
         private static void OnLoginSuccess(LoginResult result)
         {
-            Debug.Log("PlayFabAuth - Login with CustomID succeeded.");
+            Debug.Log("PlayFabAuth - Login succeeded.");
             
             _settings.EntityId = result.EntityToken.Entity.Id;
             var getName = result.InfoResultPayload.PlayerProfile.DisplayName;
@@ -67,6 +67,8 @@ namespace kart.RPGMonster.Scripts.Backend.Services
             request.Password = password;
             request.InfoRequestParameters = 
                 new GetPlayerCombinedInfoRequestParams { GetPlayerProfile = true };
+
+            _displayName = displayName;
             
             PlayFabClientAPI.LoginWithPlayFab(
                 request, PlayFabResultHandler<LoginResult>.Handle, PlayFabErrorHandler.Handle);
