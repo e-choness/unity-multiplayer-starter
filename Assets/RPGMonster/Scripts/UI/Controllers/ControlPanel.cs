@@ -74,7 +74,6 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
                     _playFabAuth.LoginWithCustomId(Account.displayName);
                     _selection = MenuSelection.RootMenu;
                 }
-                AddButton("Login with Username and Password");
             }
 
             AddButton("Cancel");
@@ -86,6 +85,18 @@ namespace kart.RPGMonster.Scripts.UI.Controllers
             Account.username = GUILayout.TextField(Account.username, 25);
             GUILayout.Label("Password:");
             Account.password = GUILayout.PasswordField(Account.password, '*', 20);
+            GUILayout.Label("Display name:");
+            Account.displayName = GUILayout.TextField(Account.displayName, 20);
+
+            if (GUILayout.Button("Register as PlayFab User"))
+            {
+                _playFabAuth.RegisterWithUsername(Account.username, Account.password, Account.displayName);
+            }
+            
+            if (GUILayout.Button("Login as PlayFab User"))
+            {
+                _playFabAuth.LoginWithUsername(Account.username, Account.password, Account.displayName);
+            }
             
             AddButton("Cancel");
         }

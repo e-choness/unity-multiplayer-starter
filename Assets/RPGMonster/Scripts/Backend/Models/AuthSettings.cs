@@ -1,6 +1,9 @@
+using System;
+
 namespace kart.RPGMonster.Scripts.Backend.Models
 {
-    public class PlayFabSettings
+    [Serializable]
+    public class AuthSettings
     {
         public string BuildId { get; set; }
         public string SessionId { get; set; }
