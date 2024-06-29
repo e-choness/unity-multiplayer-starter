@@ -2,23 +2,29 @@ using kart.RPGMonster.Scripts.Backend.Models;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
-using PlayFabSettings = kart.RPGMonster.Scripts.Backend.Models.PlayFabSettings;
 
 namespace kart.RPGMonster.Scripts.Backend.Services
 {
     public class PlayFabAuth : MonoBehaviour
     {
-        private string _displayName;
-        
-        public static PlayFabSettings Settings = new();
+        private static string _displayName;
+
+        private static AuthSettings _settings;
         private void Awake()
         {
-            Settings = new PlayFabSettings();
+            _settings = new AuthSettings();
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
-            Settings = null;
+            PlayFabResultHandler<LoginResult>.OnGetResult += OnLoginSuccess;
+            PlayFabResultHandler<RegisterPlayFabUserResult>.OnGetResult += OnRegisterSuccess;
+        }
+
+        private void OnDisable()
+        {
+            PlayFabResultHandler<LoginResult>.OnGetResult -= OnLoginSuccess;
+            PlayFabResultHandler<RegisterPlayFabUserResult>.OnGetResult -= OnRegisterSuccess;
         }
 
         public void LoginWithCustomId(string displayName)
@@ -26,37 +32,62 @@ namespace kart.RPGMonster.Scripts.Backend.Services
             var request = new LoginWithCustomIDRequest
             {
                 CustomId = SystemInfo.deviceUniqueIdentifier,
-                CreateAccount = true
+                CreateAccount = true,
+                InfoRequestParameters = 
+                    new GetPlayerCombinedInfoRequestParams {GetPlayerProfile =  true}
             };
             
             _displayName = displayName;
             
-            PlayFabClientAPI.LoginWithCustomID(request, OnLoginWithCustomIdSuccess, PlayFabErrorHandler.Handle);
+            PlayFabClientAPI.LoginWithCustomID(
+                request, PlayFabResultHandler<LoginResult>.Handle, PlayFabErrorHandler.Handle);
         }
 
-        private void OnLoginWithCustomIdSuccess(LoginResult result)
+        private static void OnLoginSuccess(LoginResult result)
         {
-            if (result == null) return;
-            
             Debug.Log("PlayFabAuth - Login with CustomID succeeded.");
             
-            Settings.EntityId = result.EntityToken.Entity.Id;
-            Settings.DisplayName = _displayName;
-            UpdateDisplayName(Settings.DisplayName);
+            _settings.EntityId = result.EntityToken.Entity.Id;
+            var getName = result.InfoResultPayload.PlayerProfile.DisplayName;
+            if (string.IsNullOrEmpty(getName))
+            {
+                _settings.DisplayName = _displayName;
+                PlayFabProfile.UpdateDisplayName(_settings.DisplayName);
+            }
+            else
+            {
+                _settings.DisplayName = getName;
+            }
         }
 
-        private void UpdateDisplayName(string displayName)
+        public void LoginWithUsername(string username, string password, string displayName)
         {
-            var request = new UpdateUserTitleDisplayNameRequest { DisplayName = displayName };
+            var request = new LoginWithPlayFabRequest();
+            request.Username = username;
+            request.Password = password;
+            request.InfoRequestParameters = 
+                new GetPlayerCombinedInfoRequestParams { GetPlayerProfile = true };
             
-            PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnUpdateDisplayNameSuccess, PlayFabErrorHandler.Handle);
+            PlayFabClientAPI.LoginWithPlayFab(
+                request, PlayFabResultHandler<LoginResult>.Handle, PlayFabErrorHandler.Handle);
         }
 
-        private void OnUpdateDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
+        public void RegisterWithUsername(string username, string password, string displayName)
         {
-            if (result == null) return;
+            var request = new RegisterPlayFabUserRequest();
+            request.Username = username;
+            request.Password = password;
+            request.RequireBothUsernameAndEmail = false;
+
+            _displayName = displayName;
             
-            Debug.Log("PlayFabAuth - Display name updated.");
+            PlayFabClientAPI.RegisterPlayFabUser(request, PlayFabResultHandler<RegisterPlayFabUserResult>.Handle, PlayFabErrorHandler.Handle);
+        }
+
+        private static void OnRegisterSuccess(RegisterPlayFabUserResult result)
+        {
+            _settings.EntityId = result.EntityToken.Entity.Id;
+            PlayFabProfile.UpdateDisplayName(_displayName);
         }
     }
 }
