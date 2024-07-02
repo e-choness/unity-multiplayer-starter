@@ -727,6 +727,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1524411113276028, guid: 1904e0016f53a184baaf644271c085a5, type: 3}
     - target: {fileID: 5665527545850088466, guid: 16876417fed29634a835c9729d11f435, type: 3}
+      propertyPath: authenticator
+      value: 
+      objectReference: {fileID: 3521913730448336549}
+    - target: {fileID: 5665527545850088466, guid: 16876417fed29634a835c9729d11f435, type: 3}
       propertyPath: timeInterpolationGui
       value: 1
       objectReference: {fileID: 0}
@@ -748,6 +752,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3647962455378617669, guid: 16876417fed29634a835c9729d11f435, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3521913730448336548}
+    - targetCorrespondingSourceObject: {fileID: 3647962455378617669, guid: 16876417fed29634a835c9729d11f435, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3521913730448336549}
   m_SourcePrefab: {fileID: 100100000, guid: 16876417fed29634a835c9729d11f435, type: 3}
 --- !u!1 &3521913730448336544 stripped
 GameObject:
@@ -797,6 +804,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 150
+--- !u!114 &3521913730448336549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3521913730448336544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2353fd784ad34645b2ab3080f6c2f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnServerAuthenticated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientAuthenticated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &6693764904347353862
 PrefabInstance:
   m_ObjectHideFlags: 0
