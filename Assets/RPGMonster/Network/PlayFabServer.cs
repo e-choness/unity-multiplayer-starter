@@ -7,7 +7,7 @@ namespace kart.RPGMonster.Network
 {
     public class PlayFabServer : NetworkManager
     {
-        private int _connectedPlayerCount = 0;
+        private int _connectedPlayerCount;
         public override void Start()
         {
             StartPlayFabAPI();
