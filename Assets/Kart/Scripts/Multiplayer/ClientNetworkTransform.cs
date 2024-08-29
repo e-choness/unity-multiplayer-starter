@@ -1,16 +1,17 @@
 using Unity.Netcode.Components;
+using UnityEngine.Serialization;
 
 namespace kart.Kart.Scripts.Multiplayer
 {
-    public enum AuthorityMode
+    public enum AuthMode
     {
         Server,
         Client
     }
     public class ClientNetworkTransform : NetworkTransform
     {
-        public AuthorityMode authorityMode = AuthorityMode.Client;
+        public AuthMode authMode = AuthMode.Client;
         protected override bool OnIsServerAuthoritative() 
-            => authorityMode == AuthorityMode.Server;
+            => authMode == AuthMode.Server;
     }
 }
